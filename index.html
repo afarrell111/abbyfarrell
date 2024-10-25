@@ -8,7 +8,7 @@
     body {
       margin: 0;
       padding: 0;
-      background: public/images/background.jpg;
+      background: url('public/images/background.jpg') center/cover no-repeat fixed;      
       font-family: 'Tahoma', sans-serif;
       height: 100vh;
       overflow: hidden;
@@ -290,11 +290,14 @@
         </div>
       </div>
       <div class="window-content">
-        <div style="padding: 20px; text-align: center;">
-          PDF Viewer - Resume will be displayed here
-        </div>
+        <iframe 
+          class="pdf-viewer"
+          src="public/images/Abby-L-Farrell-Resume.pdf"
+          type="application/pdf"
+        ></iframe>
       </div>
     </div>
+  </div>
 
     <div id="about-window" class="window">
       <div class="title-bar">
