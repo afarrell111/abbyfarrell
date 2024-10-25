@@ -1,51 +1,229 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>This is a cool site</title>
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-  body {
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: #8E7AB5;
-  }
+    body {
+      font-family: 'Tahoma', sans-serif;
+      background: #236B8E;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
 
-  .topnav {
-    overflow: hidden;
-    background-color: #8E7AB5;
-  }
-  
-  .topnav a {
-    float: left;
-    color: #E493B3;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-  }
+    .desktop {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
 
-  .topnav a:hover {
-    background-color: #B784B7;
-    color: black;
-  }
+    .window {
+      background: #ECE9D8;
+      border: 3px solid #0055EA;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+    }
 
-  .topnav a.active {
-    background-color: #8E7AB5;
-    color: white;
-  }
-</style>
+    .title-bar {
+      background: linear-gradient(to right, #0A246A, #3A6EA5);
+      color: white;
+      padding: 6px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-radius: 5px 5px 0 0;
+    }
+
+    .window-buttons {
+      display: flex;
+      gap: 4px;
+    }
+
+    .window-button {
+      width: 20px;
+      height: 20px;
+      border: 1px solid #fff;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px;
+    }
+
+    .desktop-icon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: white;
+      margin: 10px;
+      cursor: pointer;
+      text-align: center;
+      width: 80px;
+    }
+
+    .desktop-icons {
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .start-button {
+      background: linear-gradient(to bottom, #3BA13B, #1E7B1E);
+      color: white;
+      padding: 5px 15px;
+      border-radius: 3px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 20px;
+    }
+
+    .skill-bar {
+      background: #ddd;
+      height: 20px;
+      border-radius: 10px;
+      margin: 10px 0;
+      overflow: hidden;
+    }
+
+    .skill-progress {
+      height: 100%;
+      background: linear-gradient(to right, #0A246A, #3A6EA5);
+      border-radius: 10px;
+    }
+
+    .taskbar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #0055EA;
+      padding: 5px;
+      display: flex;
+      align-items: center;
+    }
+
+    .section {
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      color: #0A246A;
+      border-bottom: 2px solid #0A246A;
+      padding-bottom: 5px;
+    }
+
+    .error-window {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #ECE9D8;
+      border: 2px solid #0055EA;
+      padding: 20px;
+      box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
+      display: none;
+    }
+  </style>
 </head>
 <body>
-  <div class="topnav">
-    <a class="active" href="#home">Home</a>
-    <a href="#news">News</a>
-    <a href="#contact">Contact</a>
-    <a href="#about">About</a>
+  <div class="desktop">
+    <div class="desktop-icons">
+      <div class="desktop-icon">
+        <img src="/api/placeholder/32/32" alt="My Computer">
+        <span>My Profile</span>
+      </div>
+      <div class="desktop-icon">
+        <img src="/api/placeholder/32/32" alt="Network">
+        <span>Skills</span>
+      </div>
+      <div class="desktop-icon">
+        <img src="/api/placeholder/32/32" alt="Documents">
+        <span>Projects</span>
+      </div>
+    </div>
+
+    <div class="window">
+      <div class="title-bar">
+        <span>C:\Profile\Cybersecurity_Expert.exe</span>
+        <div class="window-buttons">
+          <div class="window-button">_</div>
+          <div class="window-button">□</div>
+          <div class="window-button">×</div>
+        </div>
+      </div>
+      <div class="content">
+        <div class="section">
+          <h2>System Information</h2>
+          <p><strong>Name:</strong> [Your Name]</p>
+          <p><strong>Status:</strong> Actively seeking cybersecurity positions</p>
+          <p><strong>Location:</strong> [Your Location]</p>
+        </div>
+
+        <div class="section">
+          <h2>Security Certificates</h2>
+          <ul>
+            <li>CompTIA Security+</li>
+            <li>Certified Ethical Hacker (CEH)</li>
+            <li>CISSP</li>
+          </ul>
+        </div>
+
+        <div class="section">
+          <h2>Skill Analysis</h2>
+          <div>
+            <p>Penetration Testing</p>
+            <div class="skill-bar">
+              <div class="skill-progress" style="width: 90%"></div>
+            </div>
+          </div>
+          <div>
+            <p>Network Security</p>
+            <div class="skill-bar">
+              <div class="skill-progress" style="width: 85%"></div>
+            </div>
+          </div>
+          <div>
+            <p>Incident Response</p>
+            <div class="skill-bar">
+              <div class="skill-progress" style="width: 80%"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <h2>Mission Log</h2>
+          <ul>
+            <li>Implemented zero-trust architecture reducing security incidents by 75%</li>
+            <li>Led red team exercises identifying critical vulnerabilities</li>
+            <li>Developed automated threat detection systems</li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class>
-  <h1>Welcome to my site!</h1>
-  <p>Thanks for stopping by checkout my Linkedin!</p>
-  <a href="https://www.linkedin.com/in/abby-leigh-farrell/">--> Check this out <--</a>
+
+  <div class="taskbar">
+    <div class="start-button">
+      <img src="/api/placeholder/16/16" alt="Start">
+      Start
+    </div>
+  </div>
+
+  <div class="error-window" id="error-popup">
+    <h3>System Alert</h3>
+    <p>Access granted to resume.exe</p>
+    <button onclick="this.parentElement.style.display='none'">OK</button>
+  </div>
+
+  <script>
+    setTimeout(() => {
+      document.getElementById('error-popup').style.display = 'block';
+    }, 2000);
+  </script>
 </body>
 </html>
