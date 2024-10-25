@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Abby Farrell </title>
+  <title>Abby Farrell | Cybersecurity Portfolio</title>
   <style>
     body {
       margin: 0;
@@ -108,23 +108,41 @@
 
     .window-content {
       height: calc(100% - 35px);
-      overflow-y: auto;
       background: white;
-      padding: 20px;
+      padding: 0;
+      overflow: hidden;
     }
 
-    .window-content::-webkit-scrollbar {
-      width: 16px;
+    .pdf-viewer {
+      width: 100%;
+      height: 100%;
+      border: none;
     }
 
-    .window-content::-webkit-scrollbar-track {
-      background: #f1f1f1;
-      border: 1px solid #ddd;
+    .trash-icon {
+      position: fixed;
+      bottom: 50px;
+      right: 20px;
+      width: 100px;
+      height: 120px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      z-index: 50;
     }
 
-    .window-content::-webkit-scrollbar-thumb {
-      background: #c1c1c1;
-      border: 1px solid #aaa;
+    .trash-icon img {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 8px;
+    }
+
+    .trash-icon .icon-label {
+      color: white;
+      text-align: center;
+      font-size: 13px;
+      text-shadow: 1px 1px 2px black;
     }
 
     .taskbar {
@@ -152,50 +170,8 @@
       color: white;
       margin-left: auto;
       padding: 0 20px;
+      font-size: 12px;
     }
-
-    .section {
-      margin-bottom: 20px;
-    }
-
-    .section h2 {
-      color: #003399;
-      border-bottom: 1px solid #003399;
-      padding-bottom: 5px;
-    }
-
-    .experience-item {
-      margin-bottom: 15px;
-      padding-left: 15px;
-      border-left: 3px solid #003399;
-    }
-
-
-.trash-icon {
-  position: fixed;
-  bottom: 50px; /* Position above taskbar */
-  right: 20px;
-  width: 100px;
-  height: 120px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-  z-index: 50;
-}
-
-.trash-icon img {
-  width: 48px;
-  height: 48px;
-  margin-bottom: 8px;
-}
-
-.trash-icon .icon-label {
-  color: white;
-  text-align: center;
-  font-size: 13px;
-  text-shadow: 1px 1px 2px black;
-}
   </style>
 </head>
 <body>
@@ -210,7 +186,7 @@
         <div class="icon-label">ABOUT.SYS</div>
       </div>
       <div class="icon" onclick="showWindow('terminal')">
-        <img src="public/images/cmd.png" alt="Terminal">
+        <img src="/api/placeholder/80/80" alt="Terminal">
         <div class="icon-label">SHELL.CMD</div>
       </div>
     </div>
@@ -223,42 +199,24 @@
         </div>
       </div>
       <div class="window-content">
-        <!-- Resume content here -->
-        <div class="section">
-          <h2>EDUCATION</h2>
-          <div class="experience-item">
-            <strong>Purdue University</strong> – Bachelor of Science in Cybersecurity
-            <br>Expected December 2024 | West Lafayette, IN
-          </div>
-        </div>
-
-        <div class="section">
-          <h2>PROFESSIONAL EXPERIENCE</h2>
-          <div class="experience-item">
-            <strong>Land O'Lakes inc.</strong> - Cyber Security Intern (SOC)
-            <br>May 2024 - Aug 2024 | Arden Hills, MN
-            <ul>
-              <li>Executed threat hunting during red-team-blue team engagement</li>
-              <li>Monitored +11,000 endpoints using Crowdstrike, Reliaquest, and Defender</li>
-              <li>Created defense-in-depth diagram for executive communication</li>
-              <li>Identified +300 MITRE ATT&CK techniques</li>
-              <li>Developed SOAR automation saving 7 hours/week</li>
-            </ul>
-          </div>
-        </div>
+        <iframe 
+          class="pdf-viewer"
+          src="public/images/Abby-L-Farrell-Resume.pdf"
+          type="application/pdf"
+        ></iframe>
       </div>
     </div>
+  </div>
+
+  <div class="trash-icon">
+    <img src="public/images/trash.ico" alt="Recycle Bin">
+    <div class="icon-label">Recycle Bin</div>
   </div>
 
   <div class="taskbar">
     <button class="start-button"></button>
     <div class="clock" id="clock"></div>
   </div>
-  
-  <div class="trash-icon">
-  <img src="public/images/trash.ico" alt="Recycle Bin">
-  <div class="icon-label">Recycle Bin</div>
-</div>
 
   <script>
     let isDragging = false;
