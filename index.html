@@ -273,15 +273,15 @@
   <div id="based">
     <div class="sidebar">
       <div class="icon" onclick="showWindow('resume')">
-        <img src="public/images/File.png" alt="Resume">
+        <img src="./public/images/File.png" alt="Resume">
         <div class="icon-label">RESUME.EXE</div>
       </div>
       <div class="icon" onclick="showWindow('about')">
-        <img src="/api/placeholder/80/80" alt="About">
+        <img src="./public/images/about.png" alt="About">
         <div class="icon-label">ABOUT.SYS</div>
       </div>
       <div class="icon" onclick="showWindow('terminal')">
-        <img src="/api/placeholder/80/80" alt="Terminal">
+        <img src="./public/images/terminal.png" alt="Terminal">
         <div class="icon-label">SHELL.CMD</div>
       </div>
     </div>
@@ -296,15 +296,39 @@
       <div class="window-content">
         <iframe 
           class="pdf-viewer"
-          src="public/images/Abby-L-Farrell-Resume.pdf"
+          src="./public/images/Abby-L-Farrell-Resume.pdf"
           type="application/pdf"
         ></iframe>
+      </div>
+    </div>
+
+    <div id="about-window" class="window">
+      <div class="title-bar">
+        <span>About.sys - Profile</span>
+        <div class="window-controls">
+          <div class="window-button close-button" onclick="hideWindow('about')">×</div>
+        </div>
+      </div>
+      <div class="window-content about-content">
+        <img src="./public/images/profile.jpg" alt="Profile Photo" class="about-image">
+        
+        <div class="about-text">
+          <h2>About Me</h2>
+          <p>Hello! I'm Abby, a cybersecurity enthusiast and current Purdue student with a passion for all things tech. Here's a bit about me:</p>
+          <ul class="interests-list">
+            <li>Cat lover and proud pet parent</li>
+            <li>Serial hobby collector - currently exploring the art of crochet</li>
+            <li>Pursuing Cybersecurity at Purdue University</li>
+            <li>Deeply passionate about technology, especially cybersecurity</li>
+          </ul>
+          <p>I believe in the perfect blend of technical expertise and creative problem-solving. Whether I'm working on securing networks or learning a new crochet pattern, I bring the same level of dedication and enthusiasm to everything I do.</p>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="trash-icon">
-    <img src="public/images/trash.ico" alt="Recycle Bin">
+    <img src="./public/images/trash.ico" alt="Recycle Bin">
     <div class="icon-label">Recycle Bin</div>
   </div>
   
