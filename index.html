@@ -2,124 +2,173 @@
 <html>
 <head>
   <style>
-    /* Previous styles remain the same except for the modified ones below */
-    
-    .icon {
-      width: 100px;  /* Increased from 64px */
-      height: 120px; /* Increased from 84px */
-      margin-bottom: 20px;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 5px;
-    }
-
-    .icon img {
-      width: 80px;  /* Increased from 48px */
-      height: 80px; /* Increased from 48px */
-      margin-bottom: 8px;
-    }
-
-    .icon-label {
-      color: #fff;
-      text-align: center;
-      font-size: 13px;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-      word-wrap: break-word;
-      max-width: 90px;
-    }
-
-    .taskbar {
+    /* Previous styles remain the same */
+    .window {
       position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 40px; /* Increased from 30px */
-      background: linear-gradient(to bottom, #245EDB, #1842A1);
-      display: flex;
-      align-items: center;
-      padding: 0 2px;
-      z-index: 1000;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #ECE9D8;
+      border: 1px solid #0055EA;
+      width: 80%;
+      max-width: 800px;
+      max-height: 80vh;
+      display: none;
+      z-index: 200;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+      resize: both;
+      overflow: hidden;
     }
 
-    .start-button {
-      height: 38px;  /* Increased from 28px */
-      width: 100px; /* Added explicit width */
-      padding: 0;
-      margin: 1px;
-      display: flex;
-      align-items: center;
-      background: url('public/images/start.jpg') no-repeat center/cover;
-      border: none;
-      cursor: pointer;
+    .window.active {
+      display: block;
     }
 
-    .taskbar-items {
-      display: flex;
-      align-items: center;
-      flex: 1;
-      padding: 0 4px;
-      opacity: 0; /* Hide the taskbar items */
-    }
-
-    .system-tray {
-      display: flex;
-      align-items: center;
-      padding: 0 10px;
-      border-left: 1px solid #1E5799;
-      height: 100%;
-    }
-
-    .clock {
+    .title-bar {
+      background: linear-gradient(to right, #0A246A, #3A6EA5);
       color: white;
-      font-size: 12px;
-      padding: 0 10px;
-      text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+      padding: 6px 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: move;
+      user-select: none;
     }
 
-    /* Keep all other styles the same */
+    .close-button {
+      width: 20px;
+      height: 20px;
+      background: linear-gradient(to bottom, #ff6b6b, #ff3333);
+      border: 1px solid #cc0000;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 3px;
+      font-family: 'Arial', sans-serif;
+      font-size: 14px;
+      user-select: none;
+    }
+
+    .close-button:hover {
+      background: linear-gradient(to bottom, #ff8585, #ff4d4d);
+    }
+
+    .close-button:active {
+      background: linear-gradient(to bottom, #ff3333, #ff6b6b);
+    }
+
+    .window-content {
+      padding: 20px;
+      overflow-y: auto;
+      max-height: calc(80vh - 32px); /* Adjusted for title bar height */
+      background: #fff;
+    }
+
+    /* Add styles for window being dragged */
+    .window.dragging {
+      opacity: 0.7;
+      cursor: move;
+    }
   </style>
 </head>
 <body>
-  <div class="sidebar">
-    <div class="icon" onclick="showWindow('resume')">
-      <img src="public/images/File.png" alt="Resume">
-      <div class="icon-label">RESUME.EXE</div>
-    </div>
-    <div class="icon" onclick="showWindow('about')">
-      <img src="/api/placeholder/80/80" alt="About">
-      <div class="icon-label">ABOUT.SYS</div>
-    </div>
-    <div class="icon" onclick="showWindow('terminal')">
-      <img src="/api/placeholder/80/80" alt="Terminal">
-      <div class="icon-label">SHELL.CMD</div>
-    </div>
-  </div>
-
-  <!-- Rest of the windows remain the same -->
-
-  <div class="taskbar">
-    <button class="start-button"></button>
-    <div class="taskbar-items">
-      <!-- Removed resume.exe taskbar item -->
-    </div>
-    <div class="system-tray">
-      <div class="clock" id="clock">15:45</div>
-    </div>
-  </div>
+  <!-- Previous content remains the same -->
 
   <script>
-    // Modified script to remove taskbar updates
+    let isDragging = false;
+    let currentX;
+    let currentY;
+    let initialX;
+    let initialY;
+    let activeWindow = null;
+    let xOffset = 0;
+    let yOffset = 0;
+
     function showWindow(id) {
-      document.querySelectorAll('.window').forEach(w => w.classList.remove('active'));
-      document.getElementById(id + '-window').classList.add('active');
+      const window = document.getElementById(id + '-window');
+      window.style.transform = 'translate(-50%, -50%)';
+      window.style.display = 'block';
+      window.classList.add('active');
+      
+      // Reset position if window was previously moved
+      xOffset = 0;
+      yOffset = 0;
     }
 
     function hideWindow(id) {
-      document.getElementById(id + '-window').classList.remove('active');
+      const window = document.getElementById(id + '-window');
+      window.classList.remove('active');
+      window.style.display = 'none';
     }
 
+    function dragStart(e, window) {
+      if (e.target.classList.contains('close-button')) return;
+      
+      initialX = e.type === "mousedown" ? e.clientX : e.touches[0].clientX;
+      initialY = e.type === "mousedown" ? e.clientY : e.touches[0].clientY;
+
+      if (e.target.closest('.title-bar')) {
+        isDragging = true;
+        activeWindow = window;
+        window.classList.add('dragging');
+      }
+    }
+
+    function dragEnd(e) {
+      if (!isDragging) return;
+      
+      initialX = currentX;
+      initialY = currentY;
+
+      isDragging = false;
+      activeWindow.classList.remove('dragging');
+      activeWindow = null;
+    }
+
+    function drag(e) {
+      if (!isDragging) return;
+
+      e.preventDefault();
+
+      currentX = e.type === "mousemove" ? e.clientX : e.touches[0].clientX;
+      currentY = e.type === "mousemove" ? e.clientY : e.touches[0].clientY;
+
+      xOffset = currentX - initialX;
+      yOffset = currentY - initialY;
+
+      setTranslate(currentX - initialX, currentY - initialY, activeWindow);
+    }
+
+    function setTranslate(xPos, yPos, el) {
+      el.style.transform = `translate(${xPos}px, ${yPos}px)`;
+    }
+
+    // Initialize draggable windows
+    document.querySelectorAll('.window').forEach(window => {
+      // Add close button to title bar
+      const titleBar = window.querySelector('.title-bar');
+      const closeButton = document.createElement('div');
+      closeButton.className = 'close-button';
+      closeButton.innerHTML = '×';
+      closeButton.onclick = () => hideWindow(window.id.replace('-window', ''));
+      titleBar.appendChild(closeButton);
+
+      // Add drag functionality
+      window.addEventListener('mousedown', e => dragStart(e, window));
+      window.addEventListener('touchstart', e => dragStart(e, window));
+    });
+
+    document.addEventListener('mousemove', drag);
+    document.addEventListener('touchmove', drag);
+    document.addEventListener('mouseup', dragEnd);
+    document.addEventListener('touchend', dragEnd);
+
+    // Prevent window from getting stuck when mouse leaves the window during drag
+    document.addEventListener('mouseleave', dragEnd);
+
+    // Initialize clock
     function updateClock() {
       const now = new Date();
       const time = now.toLocaleTimeString('en-US', { 
