@@ -30,33 +30,27 @@
     }
 
     .icon {
-      width: 100px;
-      height: 120px;
+      width: 60px; /* Reduced from 100px */
+      height: 80px; /* Reduced from 120px */
       display: flex;
       flex-direction: column;
       align-items: center;
       cursor: pointer;
       padding: 5px;
       transition: background 0.2s;
+      z-index: 1;
     }
-
-    .icon:hover {
-      background: rgba(255, 255, 255, 0.1);
-    }
-
+    
     .icon img {
-      width: 80px;
-      height: 80px;
-      margin-bottom: 8px;
-      background: rgba(255, 255, 255, 0.1);
-      padding: 5px;
-      border-radius: 5px;
+      width: 40px; /* Reduced from 80px */
+      height: 40px; /* Reduced from 80px */
+      margin-bottom: 5px;
     }
-
+    
     .icon-label {
       color: white;
       text-align: center;
-      font-size: 13px;
+      font-size: 11px; /* Reduced from 13px */
       text-shadow: 1px 1px 2px black;
     }
 
@@ -204,13 +198,27 @@
       z-index: 50;
     }
 
+    .trash-icon {
+      position: fixed;
+      bottom: 35px; /* Just above taskbar */
+      right: 20px;
+      width: 60px; /* Match other icons */
+      height: 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      z-index: 0; /* Send to back */
+    }
+    
     .trash-icon img {
-      width: 48px;
-      height: 48px;
-      margin-bottom: 8px;
-      background: rgba(255, 255, 255, 0.1);
-      padding: 5px;
-      border-radius: 5px;
+      width: 40px; /* Match other icons */
+      height: 40px;
+      margin-bottom: 5px;
+    }
+    
+    .trash-icon .icon-label {
+      font-size: 11px; /* Match other icons */
     }
 
     .taskbar {
@@ -390,10 +398,15 @@
         min-width: unset;
       }
     
-      .sidebar {
-        width: 80px;
-        padding: 10px 0;
-      }
+    .sidebar {
+      width: 70px; /* Reduced from 120px */
+      height: 100vh;
+      padding: 20px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px; /* Reduced from 20px */
+    }
     
       .icon {
         width: 70px;
@@ -459,15 +472,34 @@
         padding: 5px;
       }
     
-      /* Taskbar modifications */
-      .taskbar {
-        height: 35px;
-      }
+    .taskbar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 30px;
+      background: linear-gradient(to bottom, #1f4ba2, #1f3c75);
+      display: flex;
+      align-items: center;
+      z-index: 1000;
+    }
     
-      .start-button {
-        height: 32px;
-        font-size: 12px;
-      }
+    .start-button {
+      height: 30px;
+      width: 100px;
+      padding: 0;
+      margin: 0;
+      background: none;
+      border: none;
+      cursor: pointer;
+      z-index: 1001;
+    }
+    
+    .start-button img {
+      height: 100%;
+      width: 100%;
+      object-fit: contain;
+    }
     
       .clock {
         padding: 0 10px;
@@ -545,7 +577,6 @@
   </style>
 </head>
 <body>
-  <div id="based">
     <div class="sidebar">
       <div class="icon" onclick="showWindow('resume')">
         <img src="public/images/File.PNG" alt="Resume">
@@ -559,6 +590,11 @@
         <img src="public/images/cmd.JPG" alt="Terminal">
         <div class="icon-label">SHELL.CMD</div>
       </div>
+    </div>
+    
+    <div class="trash-icon">
+      <img src="public/images/trash.ico" alt="Recycle Bin">
+      <div class="icon-label">Recycle Bin</div>
     </div>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -625,10 +661,10 @@
   </div>
 
   <div class="taskbar">
-    <button class="start-button">Start</button>
+    <img src="public/images/START.png" alt="Start" class="start-button">
     <div class="clock" id="clock"></div>
   </div>
-
+  
   <script>
     let isDragging = false;
     let currentX;
