@@ -263,6 +263,188 @@
       padding: 0 20px;
       font-size: 12px;
     }
+
+    @media (max-width: 768px) {
+      .window {
+        width: 95% !important; /* Override any specific window widths */
+        height: 80vh !important;
+        min-width: unset !important;
+        max-width: unset !important;
+      }
+    
+      #resume-window {
+        width: 95% !important;
+        height: 80vh !important;
+      }
+    
+      .about-content {
+        flex-direction: column;
+        padding: 15px;
+        gap: 15px;
+      }
+    
+      .about-image {
+        width: 150px;
+        height: 150px;
+        align-self: center;
+      }
+    
+      .about-text {
+        min-width: unset;
+      }
+    
+      .sidebar {
+        width: 80px;
+        padding: 10px 0;
+      }
+    
+      .icon {
+        width: 70px;
+        height: 90px;
+      }
+    
+      .icon img {
+        width: 50px;
+        height: 50px;
+      }
+    
+      .icon-label {
+        font-size: 11px;
+      }
+    
+      .trash-icon {
+        bottom: 40px;
+        right: 10px;
+        width: 70px;
+        height: 90px;
+      }
+    
+      .trash-icon img {
+        width: 40px;
+        height: 40px;
+      }
+    
+      .window-content {
+        height: calc(100% - 30px);
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+      }
+    
+      .title-bar {
+        padding: 6px;
+      }
+    
+      .window-button {
+        width: 25px; /* Larger touch target */
+        height: 25px;
+        font-size: 16px;
+      }
+    
+      .interests-list li {
+        padding: 6px 0;
+        padding-left: 20px;
+        font-size: 13px;
+      }
+    
+      .about-text p {
+        font-size: 13px;
+      }
+    
+      .about-text h2 {
+        font-size: 20px;
+      }
+    
+      /* Improve touch targets */
+      .window-controls {
+        gap: 8px;
+      }
+    
+      .close-button {
+        padding: 5px;
+      }
+    
+      /* Taskbar modifications */
+      .taskbar {
+        height: 35px;
+      }
+    
+      .start-button {
+        height: 32px;
+        font-size: 12px;
+      }
+    
+      .clock {
+        padding: 0 10px;
+      }
+    }
+    
+    /* Additional styles for very small screens */
+    @media (max-width: 480px) {
+      .window {
+        width: 98% !important;
+        height: 85vh !important;
+      }
+    
+      .about-content {
+        padding: 10px;
+      }
+    
+      .about-image {
+        width: 120px;
+        height: 120px;
+      }
+    
+      .sidebar {
+        width: 60px;
+      }
+    
+      .icon {
+        width: 60px;
+        height: 80px;
+      }
+    
+      .icon img {
+        width: 40px;
+        height: 40px;
+      }
+    
+      .title-bar {
+        font-size: 14px;
+      }
+    
+      /* Improve touch interaction */
+      .window-button {
+        width: 30px;
+        height: 30px;
+        font-size: 18px;
+      }
+    }
+    
+    /* Add touch handling for mobile devices */
+    @media (hover: none) {
+      .icon:hover {
+        background: none;
+      }
+    
+      .icon:active {
+        background: rgba(255, 255, 255, 0.2);
+      }
+    
+      .start-button:hover {
+        background: linear-gradient(to bottom, #2cc532, #1c8c21);
+      }
+    
+      .start-button:active {
+        background: linear-gradient(to bottom, #1c8c21, #2cc532);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .pdf-viewer {
+        width: 100%;
+        height: 100%;
+        -webkit-overflow-scrolling: touch;
+      }
+    }
   </style>
 </head>
 <body>
@@ -281,6 +463,8 @@
         <div class="icon-label">SHELL.CMD</div>
       </div>
     </div>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <div id="resume-window" class="window">
       <div class="title-bar">
@@ -400,6 +584,53 @@
 
     setInterval(updateClock, 1000);
     updateClock();
-  </script>
+
+    document.querySelectorAll('.window').forEach(window => {
+      const titleBar = window.querySelector('.title-bar');
+      
+      titleBar.addEventListener('touchstart', function(e) {
+        if (e.target.closest('.window-controls')) return;
+        
+        isDragging = true;
+        const touch = e.touches[0];
+        initialX = touch.clientX - xOffset;
+        initialY = touch.clientY - yOffset;
+      });
+    });
+    
+    document.addEventListener('touchmove', function(e) {
+      if (!isDragging) return;
+      
+      e.preventDefault();
+      
+      const touch = e.touches[0];
+      currentX = touch.clientX - initialX;
+      currentY = touch.clientY - initialY;
+      
+      xOffset = currentX;
+      yOffset = currentY;
+      
+      const activeWindow = document.querySelector('.window.active');
+      activeWindow.style.transform = `translate(calc(-50% + ${currentX}px), calc(-50% + ${currentY}px))`;
+    }, { passive: false });
+    
+    document.addEventListener('touchend', function() {
+      isDragging = false;
+    });
+    
+    // Add double-tap to close functionality
+    let lastTap = 0;
+    document.querySelectorAll('.title-bar').forEach(titleBar => {
+      titleBar.addEventListener('touchend', function(e) {
+        const currentTime = new Date().getTime();
+        const tapLength = currentTime - lastTap;
+        if (tapLength < 500 && tapLength > 0) {
+          const windowId = this.closest('.window').id;
+          hideWindow(windowId.replace('-window', ''));
+        }
+        lastTap = currentTime;
+      });
+    });
+</script>
 </body>
 </html>
