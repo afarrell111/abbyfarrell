@@ -170,30 +170,32 @@
       border-left: 3px solid #003399;
     }
 
-    .system-tray {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-left: auto;
-    padding: 0 10px;
-    height: 100%;
-    border-left: 1px solid #1E5799;
+
+.trash-icon {
+  position: fixed;
+  bottom: 50px; /* Position above taskbar */
+  right: 20px;
+  width: 100px;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  z-index: 50;
 }
 
-.system-tray-icon {
-  width: 16px;
-  height: 16px;
-  margin-right: 5px;
+.trash-icon img {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 8px;
 }
 
-.clock {
+.trash-icon .icon-label {
   color: white;
-  padding: 0 10px;
-  font-size: 12px;
-  border-left: 1px solid #1E5799;
+  text-align: center;
+  font-size: 13px;
+  text-shadow: 1px 1px 2px black;
 }
-</style>
-    
   </style>
 </head>
 <body>
@@ -252,12 +254,14 @@
     </div>
   </div>
 
-<div class="taskbar">
-  <button class="start-button"></button>
-  <div class="system-tray">
-    <img src="public/images/trash.ico" alt="Recycle Bin" class="system-tray-icon">
+  <div class="taskbar">
+    <button class="start-button"></button>
     <div class="clock" id="clock"></div>
   </div>
+  
+  <div class="trash-icon">
+  <img src="public/images/trash.ico" alt="Recycle Bin">
+  <div class="icon-label">Recycle Bin</div>
 </div>
 
   <script>
