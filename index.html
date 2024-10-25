@@ -5,24 +5,10 @@
     body {
       margin: 0;
       padding: 0;
-      background: #000;
-      font-family: 'Courier New', monospace;
+      background: url('public/images/background.jpg') center/cover no-repeat;
+      font-family: 'Tahoma', sans-serif;
       height: 100vh;
       overflow: hidden;
-    }
-
-    .grid-background {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: 
-        linear-gradient(to right, rgba(128, 0, 255, 0.1) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(128, 0, 255, 0.1) 1px, transparent 1px);
-      background-size: 50px 50px;
-      transform: perspective(500px) rotateX(60deg);
-      transform-origin: center center;
     }
 
     .sidebar {
@@ -35,27 +21,30 @@
 
     .icon {
       width: 64px;
-      height: 64px;
-      background: #fff;
-      border: 2px solid #000;
+      height: 84px;
       margin-bottom: 20px;
       cursor: pointer;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 10px;
-      box-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+      padding: 5px;
+    }
+
+    .icon img {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 5px;
     }
 
     .icon:hover {
-      background: #e0e0e0;
+      background: rgba(255, 255, 255, 0.1);
     }
 
     .icon-label {
       color: #fff;
       text-align: center;
-      margin-top: 5px;
-      text-shadow: 2px 2px 0 #000;
+      font-size: 12px;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
     }
 
     .window {
@@ -63,13 +52,14 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background: #fff;
-      border: 2px solid #000;
+      background: #ECE9D8;
+      border: 1px solid #0055EA;
       width: 80%;
       max-width: 800px;
       max-height: 80vh;
       display: none;
       z-index: 200;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
     }
 
     .window.active {
@@ -77,12 +67,13 @@
     }
 
     .title-bar {
-      background: #000;
-      color: #fff;
-      padding: 5px 10px;
+      background: linear-gradient(to right, #0A246A, #3A6EA5);
+      color: white;
+      padding: 6px 10px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      font-family: 'Tahoma', sans-serif;
     }
 
     .window-content {
@@ -91,61 +82,164 @@
       max-height: calc(80vh - 40px);
     }
 
-    .status-bar {
+    .taskbar {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      background: #000;
-      color: #fff;
-      padding: 5px 10px;
+      height: 30px;
+      background: linear-gradient(to bottom, #245EDB, #1842A1);
       display: flex;
-      justify-content: space-between;
-      border-top: 1px solid #333;
-      font-size: 14px;
+      align-items: center;
+      padding: 0 2px;
+      z-index: 1000;
     }
 
-    .menu-item {
-      margin-right: 20px;
+    .start-button {
+      height: 28px;
+      padding: 0 10px;
+      margin: 1px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: url('public/images/start.jpg') no-repeat center/cover;
+      border: none;
       cursor: pointer;
+    }
+
+    .start-button:hover {
+      filter: brightness(1.1);
+    }
+
+    .taskbar-items {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      padding: 0 4px;
+    }
+
+    .taskbar-item {
+      height: 22px;
+      padding: 0 8px;
+      margin: 0 2px;
+      background: linear-gradient(to bottom, #236B8E, #1E5799);
+      color: white;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      border-radius: 2px;
+    }
+
+    .system-tray {
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      border-left: 1px solid #1E5799;
+    }
+
+    .clock {
+      color: white;
+      font-size: 11px;
+      padding: 0 10px;
     }
 
     .terminal {
       background: #000;
-      color: #0f0;
-      padding: 10px;
-      font-family: 'Courier New', monospace;
+      color: #00FF00;
+      padding: 15px;
+      font-family: 'Consolas', monospace;
+      line-height: 1.4;
     }
 
-    /* Content styling remains the same as before */
+    .section {
+      margin-bottom: 20px;
+      padding: 15px;
+      background: white;
+      border: 1px solid #ccc;
+    }
+
+    h2 {
+      color: #003399;
+      border-bottom: 1px solid #003399;
+      padding-bottom: 5px;
+      margin-top: 0;
+    }
+
+    .experience-item {
+      margin-bottom: 15px;
+      padding-left: 20px;
+      border-left: 3px solid #003399;
+    }
+
+    .skill-tag {
+      display: inline-block;
+      background: #003399;
+      color: white;
+      padding: 3px 8px;
+      border-radius: 3px;
+      margin: 2px;
+      font-size: 12px;
+    }
   </style>
 </head>
 <body>
-  <div class="grid-background"></div>
-  
   <div class="sidebar">
     <div class="icon" onclick="showWindow('resume')">
-      <img src="/api/placeholder/32/32" alt="Resume">
+      <img src="public/images/File.png" alt="Resume">
       <div class="icon-label">RESUME.EXE</div>
     </div>
     <div class="icon" onclick="showWindow('about')">
-      <img src="/api/placeholder/32/32" alt="About">
+      <img src="/api/placeholder/48/48" alt="About">
       <div class="icon-label">ABOUT.SYS</div>
     </div>
     <div class="icon" onclick="showWindow('terminal')">
-      <img src="/api/placeholder/32/32" alt="Terminal">
+      <img src="/api/placeholder/48/48" alt="Terminal">
       <div class="icon-label">SHELL.CMD</div>
     </div>
   </div>
 
-  <!-- Windows content remains the same as before but wrapped in window divs -->
+  <!-- Resume Window -->
   <div id="resume-window" class="window">
-    <!-- Previous resume content here -->
+    <div class="title-bar">
+      <span>Resume.exe - Abby Farrell</span>
+      <span onclick="hideWindow('resume')">×</span>
+    </div>
+    <div class="window-content">
+      <!-- Previous resume content here -->
+      <div class="section">
+        <h2>EDUCATION</h2>
+        <div class="experience-item">
+          <strong>Carnegie Mellon University</strong> – Masters of Science in Information Security
+          <br>Starting Spring 2025 | Pittsburgh, PA
+        </div>
+        <div class="experience-item">
+          <strong>Purdue University</strong> – Bachelor of Science in Cybersecurity
+          <br>Expected December 2024 | West Lafayette, IN
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>PROFESSIONAL EXPERIENCE</h2>
+        <div class="experience-item">
+          <strong>Land O'Lakes inc.</strong> - Cyber Security Intern (SOC)
+          <br>May 2024 - Aug 2024 | Arden Hills, MN
+          <ul>
+            <li>Executed threat hunting during red-team-blue team engagement</li>
+            <li>Monitored +11,000 endpoints using Crowdstrike, Reliaquest, and Defender</li>
+            <li>Created defense-in-depth diagram for executive communication</li>
+            <li>Identified +300 MITRE ATT&CK techniques</li>
+            <li>Developed SOAR automation saving 7 hours/week</li>
+          </ul>
+        </div>
+        <!-- Other experience items -->
+      </div>
+    </div>
   </div>
 
+  <!-- About Window -->
   <div id="about-window" class="window">
     <div class="title-bar">
-      <span>ABOUT.SYS</span>
+      <span>About.sys - System Information</span>
       <span onclick="hideWindow('about')">×</span>
     </div>
     <div class="window-content terminal">
@@ -157,9 +251,10 @@
     </div>
   </div>
 
+  <!-- Terminal Window -->
   <div id="terminal-window" class="window">
     <div class="title-bar">
-      <span>SHELL.CMD</span>
+      <span>Command Prompt</span>
       <span onclick="hideWindow('terminal')">×</span>
     </div>
     <div class="window-content terminal">
@@ -175,12 +270,13 @@
     </div>
   </div>
 
-  <div class="status-bar">
-    <div class="status-left">
-      MENU ffline equipment for high yielding online performance *****
+  <div class="taskbar">
+    <button class="start-button"></button>
+    <div class="taskbar-items">
+      <div class="taskbar-item">Resume.exe</div>
     </div>
-    <div class="status-right">
-      <span id="clock">22:15:28</span>
+    <div class="system-tray">
+      <div class="clock" id="clock">15:45</div>
     </div>
   </div>
 
@@ -188,15 +284,32 @@
     function showWindow(id) {
       document.querySelectorAll('.window').forEach(w => w.classList.remove('active'));
       document.getElementById(id + '-window').classList.add('active');
+      updateTaskbar(id);
     }
 
     function hideWindow(id) {
       document.getElementById(id + '-window').classList.remove('active');
+      document.querySelector(`.taskbar-item[data-window="${id}"]`)?.remove();
+    }
+
+    function updateTaskbar(id) {
+      const title = id.charAt(0).toUpperCase() + id.slice(1) + '.exe';
+      if (!document.querySelector(`.taskbar-item[data-window="${id}"]`)) {
+        const item = document.createElement('div');
+        item.className = 'taskbar-item';
+        item.setAttribute('data-window', id);
+        item.textContent = title;
+        document.querySelector('.taskbar-items').appendChild(item);
+      }
     }
 
     function updateClock() {
       const now = new Date();
-      const time = now.toLocaleTimeString('en-US', { hour12: false });
+      const time = now.toLocaleTimeString('en-US', { 
+        hour: '2-digit', 
+        minute: '2-digit',
+        hour12: true 
+      });
       document.getElementById('clock').textContent = time;
     }
 
