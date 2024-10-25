@@ -1,19 +1,70 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Abby Farrell | Cybersecurity Portfolio</title>
   <style>
-    /* Next Version */
-    
+    body {
+      margin: 0;
+      padding: 0;
+      background: url('public/images/background.jpg') center/cover no-repeat fixed;
+      font-family: 'Tahoma', sans-serif;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    #based {
+      height: 100vh;
+      display: flex;
+    }
+
+    .sidebar {
+      width: 120px;
+      height: 100vh;
+      padding: 20px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .icon {
+      width: 100px;
+      height: 120px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      padding: 5px;
+      transition: background 0.2s;
+    }
+
+    .icon:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .icon img {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 8px;
+    }
+
+    .icon-label {
+      color: white;
+      text-align: center;
+      font-size: 13px;
+      text-shadow: 1px 1px 2px black;
+    }
+
     .window {
+      display: none;
       position: absolute;
       background: #ECE9D8;
-      border: 1px solid #0055EA;
-      width: 80%;
-      max-width: 800px;
-      /* Remove max-height from window to allow content to determine height */
-      display: none;
-      z-index: 200;
-      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+      border: 3px solid #0055EA;
+      box-shadow: 4px 4px 10px rgba(0,0,0,0.5);
+      width: 800px;
+      height: 600px;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
@@ -26,145 +77,228 @@
     .title-bar {
       background: linear-gradient(to right, #0A246A, #3A6EA5);
       color: white;
-      padding: 6px 10px;
+      padding: 8px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       cursor: move;
-      user-select: none;
-      position: sticky;
-      top: 0;
-      z-index: 201;
+    }
+
+    .window-controls {
+      display: flex;
+      gap: 4px;
+    }
+
+    .window-button {
+      width: 20px;
+      height: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 3px;
+      font-family: 'Arial', sans-serif;
+      font-size: 14px;
+    }
+
+    .close-button {
+      background: #ff5c5c;
     }
 
     .window-content {
+      height: calc(100% - 35px);
+      overflow-y: auto;
+      background: white;
       padding: 20px;
-      height: 60vh; /* Fixed height for content */
-      overflow-y: auto; /* Enable scrolling */
-      background: #fff;
     }
 
-    /* Style the scrollbar */
     .window-content::-webkit-scrollbar {
       width: 16px;
-      background-color: #f0f0f0;
-    }
-
-    .window-content::-webkit-scrollbar-thumb {
-      background-color: #cdcdcd;
-      border: 1px solid #a9a9a9;
-    }
-
-    .window-content::-webkit-scrollbar-thumb:hover {
-      background-color: #a9a9a9;
     }
 
     .window-content::-webkit-scrollbar-track {
-      background-color: #f0f0f0;
-      border: 1px solid #d4d4d4;
+      background: #f1f1f1;
+      border: 1px solid #ddd;
     }
 
-    /* Rest of the styles remain the same */
+    .window-content::-webkit-scrollbar-thumb {
+      background: #c1c1c1;
+      border: 1px solid #aaa;
+    }
+
+    .taskbar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 40px;
+      background: linear-gradient(to bottom, #245EDB, #1842A1);
+      display: flex;
+      align-items: center;
+      padding: 0 2px;
+      z-index: 1000;
+    }
+
+    .start-button {
+      height: 38px;
+      width: 100px;
+      background: url('public/images/start.jpg') center/cover;
+      border: none;
+      margin: 1px;
+    }
+
+    .clock {
+      color: white;
+      margin-left: auto;
+      padding: 0 20px;
+    }
+
+    .section {
+      margin-bottom: 20px;
+    }
+
+    .section h2 {
+      color: #003399;
+      border-bottom: 1px solid #003399;
+      padding-bottom: 5px;
+    }
+
+    .experience-item {
+      margin-bottom: 15px;
+      padding-left: 15px;
+      border-left: 3px solid #003399;
+    }
   </style>
 </head>
 <body>
-  <!-- Previous content remains the same until resume window -->
-
-  <div id="resume-window" class="window">
-    <div class="title-bar">
-      <span>Resume.exe - Abby Farrell</span>
-      <div class="close-button" onclick="hideWindow('resume')">×</div>
+  <div id="based">
+    <div class="sidebar">
+      <div class="icon" onclick="showWindow('resume')">
+        <img src="public/images/File.png" alt="Resume">
+        <div class="icon-label">RESUME.EXE</div>
+      </div>
+      <div class="icon" onclick="showWindow('about')">
+        <img src="/api/placeholder/80/80" alt="About">
+        <div class="icon-label">ABOUT.SYS</div>
+      </div>
+      <div class="icon" onclick="showWindow('terminal')">
+        <img src="/api/placeholder/80/80" alt="Terminal">
+        <div class="icon-label">SHELL.CMD</div>
+      </div>
     </div>
-    <div class="window-content">
-      <div class="section">
-        <h2>EDUCATION</h2>
-        <div class="experience-item">
-          <strong>Carnegie Mellon University</strong> – Masters of Science in Information Security
-          <br>Starting Spring 2025 | Pittsburgh, PA
-        </div>
-        <div class="experience-item">
-          <strong>Purdue University</strong> – Bachelor of Science in Cybersecurity
-          <br>Expected December 2024 | West Lafayette, IN
+
+    <div id="resume-window" class="window">
+      <div class="title-bar">
+        <span>Resume.exe - Abby Farrell</span>
+        <div class="window-controls">
+          <div class="window-button close-button" onclick="hideWindow('resume')">×</div>
         </div>
       </div>
-
-      <div class="section">
-        <h2>PROFESSIONAL EXPERIENCE</h2>
-        <div class="experience-item">
-          <strong>Land O'Lakes inc.</strong> - Cyber Security Intern (SOC)
-          <br>May 2024 - Aug 2024 | Arden Hills, MN
-          <ul>
-            <li>Executed threat hunting during red-team-blue team engagement</li>
-            <li>Monitored +11,000 endpoints using Crowdstrike, Reliaquest, and Defender</li>
-            <li>Created defense-in-depth diagram for executive communication</li>
-            <li>Identified +300 MITRE ATT&CK techniques</li>
-            <li>Developed SOAR automation saving 7 hours/week</li>
-          </ul>
+      <div class="window-content">
+        <!-- Resume content here -->
+        <div class="section">
+          <h2>EDUCATION</h2>
+          <div class="experience-item">
+            <strong>Carnegie Mellon University</strong> – Masters of Science in Information Security
+            <br>Starting Spring 2025 | Pittsburgh, PA
+          </div>
+          <div class="experience-item">
+            <strong>Purdue University</strong> – Bachelor of Science in Cybersecurity
+            <br>Expected December 2024 | West Lafayette, IN
+          </div>
         </div>
 
-        <div class="experience-item">
-          <strong>Progressive Insurance</strong> - Network Data Engineer Intern
-          <br>May 2023 - Aug 2023 | Mayfield, OH
-          <ul>
-            <li>Resolved +250 technical support tickets</li>
-            <li>Managed network infrastructure for +150 remote offices</li>
-            <li>Troubleshoot Cisco routers and switches</li>
-          </ul>
+        <div class="section">
+          <h2>PROFESSIONAL EXPERIENCE</h2>
+          <div class="experience-item">
+            <strong>Land O'Lakes inc.</strong> - Cyber Security Intern (SOC)
+            <br>May 2024 - Aug 2024 | Arden Hills, MN
+            <ul>
+              <li>Executed threat hunting during red-team-blue team engagement</li>
+              <li>Monitored +11,000 endpoints using Crowdstrike, Reliaquest, and Defender</li>
+              <li>Created defense-in-depth diagram for executive communication</li>
+              <li>Identified +300 MITRE ATT&CK techniques</li>
+              <li>Developed SOAR automation saving 7 hours/week</li>
+            </ul>
+          </div>
         </div>
-
-        <div class="experience-item">
-          <strong>Transaction Data Systems Clinical</strong> - IT Intern
-          <br>May 2022 - Aug 2022 | Orlando, FL
-          <ul>
-            <li>Led Zendesk to Jira migration improving efficiency by 50%</li>
-            <li>Conducted reconnaissance on Windows/Linux servers</li>
-            <li>Served as Scrum Master for agile teams</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="section">
-        <h2>LEADERSHIP</h2>
-        <div class="experience-item">
-          <strong>Lionfish Cybersecurity</strong> - Cyber Security Instructor
-          <br>Aug 2024 - Present | Remote
-          <ul>
-            <li>Taught +20 students CompTIA A+ preparation</li>
-          </ul>
-        </div>
-
-        <div class="experience-item">
-          <strong>Ethical Hackers of Purdue</strong> - Founder/President
-          <br>Jan 2023 - Present | West Lafayette, IN
-          <ul>
-            <li>Led weekly Hack The Box exercises</li>
-            <li>Managed 10-person leadership team</li>
-            <li>Delivered technical training to +800 students</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="section">
-        <h2>TECHNICAL SKILLS</h2>
-        <div class="skill-tag">Crowdstrike</div>
-        <div class="skill-tag">Defender</div>
-        <div class="skill-tag">SOAR</div>
-        <div class="skill-tag">MITRE ATT&CK</div>
-        <div class="skill-tag">Network Security</div>
-        <div class="skill-tag">Linux</div>
-        <div class="skill-tag">Windows</div>
-        <div class="skill-tag">Python</div>
-        <div class="skill-tag">Java</div>
-        <div class="skill-tag">SQL</div>
-        <div class="skill-tag">Bash</div>
       </div>
     </div>
   </div>
 
-  <!-- Rest of the content remains the same -->
+  <div class="taskbar">
+    <button class="start-button"></button>
+    <div class="clock" id="clock"></div>
+  </div>
 
   <script>
-    /* Previous script content remains the same */
+    let isDragging = false;
+    let currentX;
+    let currentY;
+    let initialX;
+    let initialY;
+    let xOffset = 0;
+    let yOffset = 0;
+
+    function showWindow(id) {
+      document.querySelectorAll('.window').forEach(w => w.classList.remove('active'));
+      const window = document.getElementById(id + '-window');
+      window.classList.add('active');
+      
+      // Reset position on open
+      window.style.transform = 'translate(-50%, -50%)';
+      xOffset = 0;
+      yOffset = 0;
+    }
+
+    function hideWindow(id) {
+      document.getElementById(id + '-window').classList.remove('active');
+    }
+
+    document.querySelectorAll('.window').forEach(window => {
+      const titleBar = window.querySelector('.title-bar');
+      
+      titleBar.addEventListener('mousedown', function(e) {
+        if (e.target.closest('.window-controls')) return;
+        
+        isDragging = true;
+        initialX = e.clientX - xOffset;
+        initialY = e.clientY - yOffset;
+      });
+    });
+
+    document.addEventListener('mousemove', function(e) {
+      if (!isDragging) return;
+      
+      e.preventDefault();
+      
+      currentX = e.clientX - initialX;
+      currentY = e.clientY - initialY;
+      
+      xOffset = currentX;
+      yOffset = currentY;
+      
+      const activeWindow = document.querySelector('.window.active');
+      activeWindow.style.transform = `translate(calc(-50% + ${currentX}px), calc(-50% + ${currentY}px))`;
+    });
+
+    document.addEventListener('mouseup', function() {
+      isDragging = false;
+    });
+
+    function updateClock() {
+      const now = new Date();
+      const time = now.toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+      });
+      document.getElementById('clock').textContent = time;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
   </script>
 </body>
 </html>
