@@ -169,6 +169,31 @@
       padding-left: 15px;
       border-left: 3px solid #003399;
     }
+
+    .system-tray {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+    padding: 0 10px;
+    height: 100%;
+    border-left: 1px solid #1E5799;
+}
+
+.system-tray-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+}
+
+.clock {
+  color: white;
+  padding: 0 10px;
+  font-size: 12px;
+  border-left: 1px solid #1E5799;
+}
+</style>
+    
   </style>
 </head>
 <body>
@@ -227,10 +252,13 @@
     </div>
   </div>
 
-  <div class="taskbar">
-    <button class="start-button"></button>
+<div class="taskbar">
+  <button class="start-button"></button>
+  <div class="system-tray">
+    <img src="public/images/trash.ico" alt="Recycle Bin" class="system-tray-icon">
     <div class="clock" id="clock"></div>
   </div>
+</div>
 
   <script>
     let isDragging = false;
