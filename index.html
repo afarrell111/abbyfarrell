@@ -2,12 +2,52 @@
 <html>
 <head>
   <style>
-    /* Previous styles remain the same */
-    .window {
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Tahoma', sans-serif;
+      height: 100vh;
+      background: url('public/images/background.jpg') center/cover fixed no-repeat;
+      overflow: hidden;
+      color: #333;
+    }
+
+    .sidebar {
       position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      left: 20px;
+      top: 20px;
+      width: 100px;
+      z-index: 100;
+    }
+
+    .icon {
+      width: 100px;
+      height: 120px;
+      margin-bottom: 20px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 5px;
+    }
+
+    .icon img {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 8px;
+    }
+
+    .icon-label {
+      color: #fff;
+      text-align: center;
+      font-size: 13px;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+      word-wrap: break-word;
+      max-width: 90px;
+    }
+
+    .window {
+      position: absolute;
       background: #ECE9D8;
       border: 1px solid #0055EA;
       width: 80%;
@@ -16,8 +56,9 @@
       display: none;
       z-index: 200;
       box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
-      resize: both;
-      overflow: hidden;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
 
     .window.active {
@@ -35,6 +76,26 @@
       user-select: none;
     }
 
+    .window-content {
+      padding: 20px;
+      overflow-y: auto;
+      max-height: calc(80vh - 40px);
+      background: #fff;
+    }
+
+    .section {
+      margin-bottom: 20px;
+      padding: 15px;
+      background: #fff;
+      border: 1px solid #ddd;
+    }
+
+    .experience-item {
+      margin-bottom: 15px;
+      padding-left: 20px;
+      border-left: 3px solid #0A246A;
+    }
+
     .close-button {
       width: 20px;
       height: 20px;
@@ -46,35 +107,121 @@
       justify-content: center;
       cursor: pointer;
       border-radius: 3px;
-      font-family: 'Arial', sans-serif;
-      font-size: 14px;
-      user-select: none;
     }
 
-    .close-button:hover {
-      background: linear-gradient(to bottom, #ff8585, #ff4d4d);
+    .taskbar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 40px;
+      background: linear-gradient(to bottom, #245EDB, #1842A1);
+      display: flex;
+      align-items: center;
+      padding: 0 2px;
+      z-index: 1000;
     }
 
-    .close-button:active {
-      background: linear-gradient(to bottom, #ff3333, #ff6b6b);
+    .start-button {
+      height: 38px;
+      width: 100px;
+      padding: 0;
+      margin: 1px;
+      display: flex;
+      align-items: center;
+      background: url('public/images/start.jpg') no-repeat center/cover;
+      border: none;
+      cursor: pointer;
     }
 
-    .window-content {
-      padding: 20px;
-      overflow-y: auto;
-      max-height: calc(80vh - 32px); /* Adjusted for title bar height */
-      background: #fff;
+    .system-tray {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+      padding: 0 10px;
+      height: 100%;
+      border-left: 1px solid #1E5799;
     }
 
-    /* Add styles for window being dragged */
-    .window.dragging {
-      opacity: 0.7;
-      cursor: move;
+    .clock {
+      color: white;
+      font-size: 12px;
+      padding: 0 10px;
+    }
+
+    h2 {
+      color: #0A246A;
+      border-bottom: 1px solid #0A246A;
+      padding-bottom: 5px;
+    }
+
+    .skill-tag {
+      display: inline-block;
+      background: #0A246A;
+      color: white;
+      padding: 3px 8px;
+      border-radius: 3px;
+      margin: 2px;
     }
   </style>
 </head>
 <body>
-  <!-- Previous content remains the same -->
+  <div class="sidebar">
+    <div class="icon" onclick="showWindow('resume')">
+      <img src="public/images/File.png" alt="Resume">
+      <div class="icon-label">RESUME.EXE</div>
+    </div>
+    <div class="icon" onclick="showWindow('about')">
+      <img src="/api/placeholder/80/80" alt="About">
+      <div class="icon-label">ABOUT.SYS</div>
+    </div>
+    <div class="icon" onclick="showWindow('terminal')">
+      <img src="/api/placeholder/80/80" alt="Terminal">
+      <div class="icon-label">SHELL.CMD</div>
+    </div>
+  </div>
+
+  <div id="resume-window" class="window">
+    <div class="title-bar">
+      <span>Resume.exe - Abby Farrell</span>
+      <div class="close-button" onclick="hideWindow('resume')">×</div>
+    </div>
+    <div class="window-content">
+      <div class="section">
+        <h2>EDUCATION</h2>
+        <div class="experience-item">
+          <strong>Carnegie Mellon University</strong> – Masters of Science in Information Security
+          <br>Starting Spring 2025 | Pittsburgh, PA
+        </div>
+        <div class="experience-item">
+          <strong>Purdue University</strong> – Bachelor of Science in Cybersecurity
+          <br>Expected December 2024 | West Lafayette, IN
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>PROFESSIONAL EXPERIENCE</h2>
+        <div class="experience-item">
+          <strong>Land O'Lakes inc.</strong> - Cyber Security Intern (SOC)
+          <br>May 2024 - Aug 2024 | Arden Hills, MN
+          <ul>
+            <li>Executed threat hunting during red-team-blue team engagement</li>
+            <li>Monitored +11,000 endpoints using Crowdstrike, Reliaquest, and Defender</li>
+            <li>Created defense-in-depth diagram for executive communication</li>
+            <li>Identified +300 MITRE ATT&CK techniques</li>
+            <li>Developed SOAR automation saving 7 hours/week</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="taskbar">
+    <button class="start-button"></button>
+    <div class="system-tray">
+      <div class="clock" id="clock"></div>
+    </div>
+  </div>
 
   <script>
     let isDragging = false;
@@ -83,92 +230,53 @@
     let initialX;
     let initialY;
     let activeWindow = null;
-    let xOffset = 0;
-    let yOffset = 0;
 
     function showWindow(id) {
       const window = document.getElementById(id + '-window');
-      window.style.transform = 'translate(-50%, -50%)';
-      window.style.display = 'block';
       window.classList.add('active');
       
-      // Reset position if window was previously moved
-      xOffset = 0;
-      yOffset = 0;
+      // Center window on first open
+      window.style.top = '50%';
+      window.style.left = '50%';
+      window.style.transform = 'translate(-50%, -50%)';
     }
 
     function hideWindow(id) {
-      const window = document.getElementById(id + '-window');
-      window.classList.remove('active');
-      window.style.display = 'none';
+      document.getElementById(id + '-window').classList.remove('active');
     }
 
-    function dragStart(e, window) {
-      if (e.target.classList.contains('close-button')) return;
+    document.querySelectorAll('.window').forEach(window => {
+      const titleBar = window.querySelector('.title-bar');
       
-      initialX = e.type === "mousedown" ? e.clientX : e.touches[0].clientX;
-      initialY = e.type === "mousedown" ? e.clientY : e.touches[0].clientY;
-
-      if (e.target.closest('.title-bar')) {
+      titleBar.addEventListener('mousedown', function(e) {
+        if (e.target.classList.contains('close-button')) return;
+        
         isDragging = true;
         activeWindow = window;
-        window.classList.add('dragging');
-      }
-    }
+        
+        initialX = e.clientX - window.offsetLeft;
+        initialY = e.clientY - window.offsetTop;
+      });
+    });
 
-    function dragEnd(e) {
-      if (!isDragging) return;
-      
-      initialX = currentX;
-      initialY = currentY;
-
-      isDragging = false;
-      activeWindow.classList.remove('dragging');
-      activeWindow = null;
-    }
-
-    function drag(e) {
+    document.addEventListener('mousemove', function(e) {
       if (!isDragging) return;
 
       e.preventDefault();
-
-      currentX = e.type === "mousemove" ? e.clientX : e.touches[0].clientX;
-      currentY = e.type === "mousemove" ? e.clientY : e.touches[0].clientY;
-
-      xOffset = currentX - initialX;
-      yOffset = currentY - initialY;
-
-      setTranslate(currentX - initialX, currentY - initialY, activeWindow);
-    }
-
-    function setTranslate(xPos, yPos, el) {
-      el.style.transform = `translate(${xPos}px, ${yPos}px)`;
-    }
-
-    // Initialize draggable windows
-    document.querySelectorAll('.window').forEach(window => {
-      // Add close button to title bar
-      const titleBar = window.querySelector('.title-bar');
-      const closeButton = document.createElement('div');
-      closeButton.className = 'close-button';
-      closeButton.innerHTML = '×';
-      closeButton.onclick = () => hideWindow(window.id.replace('-window', ''));
-      titleBar.appendChild(closeButton);
-
-      // Add drag functionality
-      window.addEventListener('mousedown', e => dragStart(e, window));
-      window.addEventListener('touchstart', e => dragStart(e, window));
+      
+      const newX = e.clientX - initialX;
+      const newY = e.clientY - initialY;
+      
+      activeWindow.style.left = newX + 'px';
+      activeWindow.style.top = newY + 'px';
+      activeWindow.style.transform = 'none';
     });
 
-    document.addEventListener('mousemove', drag);
-    document.addEventListener('touchmove', drag);
-    document.addEventListener('mouseup', dragEnd);
-    document.addEventListener('touchend', dragEnd);
+    document.addEventListener('mouseup', function() {
+      isDragging = false;
+      activeWindow = null;
+    });
 
-    // Prevent window from getting stuck when mouse leaves the window during drag
-    document.addEventListener('mouseleave', dragEnd);
-
-    // Initialize clock
     function updateClock() {
       const now = new Date();
       const time = now.toLocaleTimeString('en-US', { 
