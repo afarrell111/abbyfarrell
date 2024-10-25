@@ -742,6 +742,65 @@
         lastTap = currentTime;
       });
     });
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        document.getElementById('errorPopup').style.display = 'block';
+        new Audio('public/audio/error.wav').play();
+      }, 500);
+    });
+    
+    function closeErrorPopup() {
+      const popup = document.getElementById('errorPopup');
+      popup.style.animation = 'fadeIn 0.3s ease-in-out reverse';
+      setTimeout(() => {
+        popup.style.display = 'none';
+        popup.style.animation = '';
+      }, 300);
+    }
+    
+    // Close popup on Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeErrorPopup();
+      }
+    });
+    
+    // Prevent popup from being dragged off screen
+    document.querySelector('.error-popup').addEventListener('mousedown', function(e) {
+      if (!e.target.closest('.error-title-bar') || e.target.closest('.close-button')) {
+        return;
+      }
+      let isDragging = true;
+      let startX = e.clientX - this.offsetLeft;
+      let startY = e.clientY - this.offsetTop;
+    
+      const moveHandler = (e) => {
+        if (!isDragging) return;
+        
+        let newX = e.clientX - startX;
+        let newY = e.clientY - startY;
+        
+        // Keep popup within viewport
+        const maxX = window.innerWidth - this.offsetWidth;
+        const maxY = window.innerHeight - this.offsetHeight;
+        
+        newX = Math.max(0, Math.min(newX, maxX));
+        newY = Math.max(0, Math.min(newY, maxY));
+        
+        this.style.left = newX + 'px';
+        this.style.top = newY + 'px';
+        this.style.transform = 'none';
+      };
+    
+      const upHandler = () => {
+        isDragging = false;
+        document.removeEventListener('mousemove', moveHandler);
+        document.removeEventListener('mouseup', upHandler);
+      };
+    
+      document.addEventListener('mousemove', moveHandler);
+      document.addEventListener('mouseup', upHandler);
+    });
 </script>
 </body>
 </html>
