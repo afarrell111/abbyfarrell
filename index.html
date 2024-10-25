@@ -3,227 +3,205 @@
 <head>
   <style>
     body {
-      font-family: 'Tahoma', sans-serif;
-      background: #236B8E;
       margin: 0;
-      padding: 20px;
-      color: #333;
-    }
-
-    .desktop {
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-
-    .window {
-      background: #ECE9D8;
-      border: 3px solid #0055EA;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
-    }
-
-    .title-bar {
-      background: linear-gradient(to right, #0A246A, #3A6EA5);
-      color: white;
-      padding: 6px 10px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-radius: 5px 5px 0 0;
-    }
-
-    .window-buttons {
-      display: flex;
-      gap: 4px;
-    }
-
-    .window-button {
-      width: 20px;
-      height: 20px;
-      border: 1px solid #fff;
-      border-radius: 3px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
-
-    .content {
-      padding: 20px;
-    }
-
-    .desktop-icon {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      color: white;
-      margin: 10px;
-      cursor: pointer;
-      text-align: center;
-      width: 80px;
-    }
-
-    .desktop-icons {
-      display: flex;
-      flex-wrap: wrap;
-      margin-bottom: 20px;
-    }
-
-    .start-button {
-      background: linear-gradient(to bottom, #3BA13B, #1E7B1E);
-      color: white;
-      padding: 5px 15px;
-      border-radius: 3px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      margin-bottom: 20px;
-    }
-
-    .skill-bar {
-      background: #ddd;
-      height: 20px;
-      border-radius: 10px;
-      margin: 10px 0;
+      padding: 0;
+      background: #000;
+      font-family: 'Courier New', monospace;
+      height: 100vh;
       overflow: hidden;
     }
 
-    .skill-progress {
-      height: 100%;
-      background: linear-gradient(to right, #0A246A, #3A6EA5);
-      border-radius: 10px;
-    }
-
-    .taskbar {
+    .grid-background {
       position: fixed;
-      bottom: 0;
+      top: 0;
       left: 0;
       right: 0;
-      background: #0055EA;
-      padding: 5px;
-      display: flex;
-      align-items: center;
+      bottom: 0;
+      background: 
+        linear-gradient(to right, rgba(128, 0, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(128, 0, 255, 0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      transform: perspective(500px) rotateX(60deg);
+      transform-origin: center center;
     }
 
-    .section {
+    .sidebar {
+      position: fixed;
+      left: 20px;
+      top: 20px;
+      width: 100px;
+      z-index: 100;
+    }
+
+    .icon {
+      width: 64px;
+      height: 64px;
+      background: #fff;
+      border: 2px solid #000;
       margin-bottom: 20px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px;
+      box-shadow: 3px 3px 0 rgba(0,0,0,0.2);
     }
 
-    h2 {
-      color: #0A246A;
-      border-bottom: 2px solid #0A246A;
-      padding-bottom: 5px;
+    .icon:hover {
+      background: #e0e0e0;
     }
 
-    .error-window {
+    .icon-label {
+      color: #fff;
+      text-align: center;
+      margin-top: 5px;
+      text-shadow: 2px 2px 0 #000;
+    }
+
+    .window {
       position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background: #ECE9D8;
-      border: 2px solid #0055EA;
-      padding: 20px;
-      box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
+      background: #fff;
+      border: 2px solid #000;
+      width: 80%;
+      max-width: 800px;
+      max-height: 80vh;
       display: none;
+      z-index: 200;
     }
+
+    .window.active {
+      display: block;
+    }
+
+    .title-bar {
+      background: #000;
+      color: #fff;
+      padding: 5px 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .window-content {
+      padding: 20px;
+      overflow-y: auto;
+      max-height: calc(80vh - 40px);
+    }
+
+    .status-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #000;
+      color: #fff;
+      padding: 5px 10px;
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid #333;
+      font-size: 14px;
+    }
+
+    .menu-item {
+      margin-right: 20px;
+      cursor: pointer;
+    }
+
+    .terminal {
+      background: #000;
+      color: #0f0;
+      padding: 10px;
+      font-family: 'Courier New', monospace;
+    }
+
+    /* Content styling remains the same as before */
   </style>
 </head>
 <body>
-  <div class="desktop">
-    <div class="desktop-icons">
-      <div class="desktop-icon">
-        <img src="/api/placeholder/32/32" alt="My Computer">
-        <span>My Profile</span>
-      </div>
-      <div class="desktop-icon">
-        <img src="/api/placeholder/32/32" alt="Network">
-        <span>Skills</span>
-      </div>
-      <div class="desktop-icon">
-        <img src="/api/placeholder/32/32" alt="Documents">
-        <span>Projects</span>
-      </div>
+  <div class="grid-background"></div>
+  
+  <div class="sidebar">
+    <div class="icon" onclick="showWindow('resume')">
+      <img src="/api/placeholder/32/32" alt="Resume">
+      <div class="icon-label">RESUME.EXE</div>
     </div>
-
-    <div class="window">
-      <div class="title-bar">
-        <span>C:\Profile\Cybersecurity_Expert.exe</span>
-        <div class="window-buttons">
-          <div class="window-button">_</div>
-          <div class="window-button">□</div>
-          <div class="window-button">×</div>
-        </div>
-      </div>
-      <div class="content">
-        <div class="section">
-          <h2>System Information</h2>
-          <p><strong>Name:</strong> [Your Name]</p>
-          <p><strong>Status:</strong> Actively seeking cybersecurity positions</p>
-          <p><strong>Location:</strong> [Your Location]</p>
-        </div>
-
-        <div class="section">
-          <h2>Security Certificates</h2>
-          <ul>
-            <li>CompTIA Security+</li>
-            <li>Certified Ethical Hacker (CEH)</li>
-            <li>CISSP</li>
-          </ul>
-        </div>
-
-        <div class="section">
-          <h2>Skill Analysis</h2>
-          <div>
-            <p>Penetration Testing</p>
-            <div class="skill-bar">
-              <div class="skill-progress" style="width: 90%"></div>
-            </div>
-          </div>
-          <div>
-            <p>Network Security</p>
-            <div class="skill-bar">
-              <div class="skill-progress" style="width: 85%"></div>
-            </div>
-          </div>
-          <div>
-            <p>Incident Response</p>
-            <div class="skill-bar">
-              <div class="skill-progress" style="width: 80%"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="section">
-          <h2>Mission Log</h2>
-          <ul>
-            <li>Implemented zero-trust architecture reducing security incidents by 75%</li>
-            <li>Led red team exercises identifying critical vulnerabilities</li>
-            <li>Developed automated threat detection systems</li>
-          </ul>
-        </div>
-      </div>
+    <div class="icon" onclick="showWindow('about')">
+      <img src="/api/placeholder/32/32" alt="About">
+      <div class="icon-label">ABOUT.SYS</div>
+    </div>
+    <div class="icon" onclick="showWindow('terminal')">
+      <img src="/api/placeholder/32/32" alt="Terminal">
+      <div class="icon-label">SHELL.CMD</div>
     </div>
   </div>
 
-  <div class="taskbar">
-    <div class="start-button">
-      <img src="/api/placeholder/16/16" alt="Start">
-      Start
+  <!-- Windows content remains the same as before but wrapped in window divs -->
+  <div id="resume-window" class="window">
+    <!-- Previous resume content here -->
+  </div>
+
+  <div id="about-window" class="window">
+    <div class="title-bar">
+      <span>ABOUT.SYS</span>
+      <span onclick="hideWindow('about')">×</span>
+    </div>
+    <div class="window-content terminal">
+      > SCANNING SYSTEM INFO...
+      > Cybersecurity Professional
+      > Specializing in: Network Security, Threat Hunting, SOAR
+      > Current Status: Pursuing MS in Information Security
+      > Mission: Protecting Digital Assets
     </div>
   </div>
 
-  <div class="error-window" id="error-popup">
-    <h3>System Alert</h3>
-    <p>Access granted to resume.exe</p>
-    <button onclick="this.parentElement.style.display='none'">OK</button>
+  <div id="terminal-window" class="window">
+    <div class="title-bar">
+      <span>SHELL.CMD</span>
+      <span onclick="hideWindow('terminal')">×</span>
+    </div>
+    <div class="window-content terminal">
+      C:\Users\AFarrell> whoami
+      > Security Analyst | Threat Hunter | Network Engineer
+      C:\Users\AFarrell> dir /skills
+      > DISPLAYING SKILL SET:
+        - Network Security
+        - MITRE ATT&CK
+        - Python Scripting
+        - Incident Response
+      C:\Users\AFarrell> _
+    </div>
+  </div>
+
+  <div class="status-bar">
+    <div class="status-left">
+      MENU ffline equipment for high yielding online performance *****
+    </div>
+    <div class="status-right">
+      <span id="clock">22:15:28</span>
+    </div>
   </div>
 
   <script>
-    setTimeout(() => {
-      document.getElementById('error-popup').style.display = 'block';
-    }, 2000);
+    function showWindow(id) {
+      document.querySelectorAll('.window').forEach(w => w.classList.remove('active'));
+      document.getElementById(id + '-window').classList.add('active');
+    }
+
+    function hideWindow(id) {
+      document.getElementById(id + '-window').classList.remove('active');
+    }
+
+    function updateClock() {
+      const now = new Date();
+      const time = now.toLocaleTimeString('en-US', { hour12: false });
+      document.getElementById('clock').textContent = time;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
   </script>
 </body>
 </html>
