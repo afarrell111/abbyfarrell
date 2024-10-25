@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Abby Farrell </title>
+  <title>Abby Farrell</title>
   <style>
     body {
       margin: 0;
       padding: 0;
-      background: url('public/images/background.jpg') center/cover no-repeat fixed;
+      background: public/images/background.jpg;
       font-family: 'Tahoma', sans-serif;
       height: 100vh;
       overflow: hidden;
@@ -48,6 +48,9 @@
       width: 80px;
       height: 80px;
       margin-bottom: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 5px;
+      border-radius: 5px;
     }
 
     .icon-label {
@@ -71,9 +74,15 @@
     #resume-window {
       width: 800px;
       height: 600px;
-    } 
+    }
 
-    
+    #about-window {
+      width: auto;
+      height: auto;
+      min-width: 600px;
+      max-width: 800px;
+    }
+
     .window.active {
       display: block;
     }
@@ -123,6 +132,65 @@
       border: none;
     }
 
+    .about-content {
+      display: flex;
+      padding: 20px;
+      gap: 30px;
+      background: #ECE9D8;
+    }
+
+    .about-image {
+      width: 200px;
+      height: 200px;
+      border: 3px solid #0055EA;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+      flex-shrink: 0;
+      object-fit: cover;
+      background: #fff;
+    }
+
+    .about-text {
+      flex: 1;
+      font-family: 'Tahoma', sans-serif;
+      min-width: 300px;
+    }
+
+    .about-text h2 {
+      color: #003399;
+      margin-top: 0;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #003399;
+      font-size: 24px;
+    }
+
+    .about-text p {
+      line-height: 1.6;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+
+    .interests-list {
+      list-style-type: none;
+      padding: 0;
+      margin: 15px 0;
+    }
+
+    .interests-list li {
+      padding: 8px 0;
+      padding-left: 25px;
+      position: relative;
+      font-size: 14px;
+    }
+
+    .interests-list li::before {
+      content: "•";
+      color: #003399;
+      font-size: 20px;
+      position: absolute;
+      left: 5px;
+      top: 6px;
+    }
+
     .trash-icon {
       position: fixed;
       bottom: 50px;
@@ -140,77 +208,9 @@
       width: 48px;
       height: 48px;
       margin-bottom: 8px;
-    }
-
-    .trash-icon .icon-label {
-      color: white;
-      text-align: center;
-      font-size: 13px;
-      text-shadow: 1px 1px 2px black;
-    }
-
-    #about-window {
-      width: auto;
-      height: auto;
-      min-width: 600px;
-      max-width: 800px;
-    }
-    
-    .about-content {
-      display: flex;
-      padding: 20px;
-      gap: 30px;
-      background: #ECE9D8;
-    }
-    
-    .about-image {
-      width: 200px;
-      height: 200px;
-      border: 3px solid #0055EA;
-      box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
-      flex-shrink: 0; /* Prevents image from shrinking */
-    }
-    
-    .about-text {
-      flex: 1;
-      font-family: 'Tahoma', sans-serif;
-      min-width: 300px; /* Ensures text has enough space */
-    }
-    
-    .about-text h2 {
-      color: #003399;
-      margin-top: 0;
-      padding-bottom: 10px;
-      border-bottom: 2px solid #003399;
-      font-size: 24px;
-    }
-    
-    .about-text p {
-      line-height: 1.6;
-      margin-bottom: 15px;
-      font-size: 14px;
-    }
-    
-    .interests-list {
-      list-style-type: none;
-      padding: 0;
-      margin: 15px 0;
-    }
-    
-    .interests-list li {
-      padding: 8px 0;
-      padding-left: 25px;
-      position: relative;
-      font-size: 14px;
-    }
-    
-    .interests-list li::before {
-      content: "•";
-      color: #003399;
-      font-size: 20px;
-      position: absolute;
-      left: 5px;
-      top: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 5px;
+      border-radius: 5px;
     }
 
     .taskbar {
@@ -224,7 +224,7 @@
       align-items: center;
       z-index: 1000;
     }
-    
+
     .start-button {
       display: flex;
       align-items: center;
@@ -241,9 +241,9 @@
       color: white;
       text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
     }
-    
+
     .start-button::before {
-      content: "";
+      content: "W";
       display: inline-block;
       width: 24px;
       height: 24px;
@@ -251,16 +251,12 @@
       background: linear-gradient(45deg, #ff0000, #ff6600, #ffcc00, #33cc33);
       border-radius: 2px;
       box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Segoe UI', sans-serif;
     }
-    
-    .start-button:hover {
-      background: linear-gradient(to bottom, #39d43f, #249c29);
-    }
-    
-    .start-button:active {
-      background: linear-gradient(to bottom, #1c8c21, #2cc532);
-      padding-top: 1px;
-    }
+
     .clock {
       color: white;
       margin-left: auto;
@@ -273,15 +269,15 @@
   <div id="based">
     <div class="sidebar">
       <div class="icon" onclick="showWindow('resume')">
-        <img src="./public/images/File.png" alt="Resume">
+        <img src="public/images/File.PNG" alt="Resume">
         <div class="icon-label">RESUME.EXE</div>
       </div>
       <div class="icon" onclick="showWindow('about')">
-        <img src="./public/images/about.png" alt="About">
+        <img src="public/images/about.png" alt="About">
         <div class="icon-label">ABOUT.SYS</div>
       </div>
       <div class="icon" onclick="showWindow('terminal')">
-        <img src="./public/images/terminal.png" alt="Terminal">
+        <img src="public/images/cmd.JPG" alt="Terminal">
         <div class="icon-label">SHELL.CMD</div>
       </div>
     </div>
@@ -294,11 +290,9 @@
         </div>
       </div>
       <div class="window-content">
-        <iframe 
-          class="pdf-viewer"
-          src="./public/images/Abby-L-Farrell-Resume.pdf"
-          type="application/pdf"
-        ></iframe>
+        <div style="padding: 20px; text-align: center;">
+          PDF Viewer - Resume will be displayed here
+        </div>
       </div>
     </div>
 
@@ -310,7 +304,7 @@
         </div>
       </div>
       <div class="window-content about-content">
-        <img src="./public/images/profile.jpg" alt="Profile Photo" class="about-image">
+        <img src="public/images/profile.jpg" alt="Profile Photo" class="about-image">
         
         <div class="about-text">
           <h2>About Me</h2>
@@ -328,36 +322,14 @@
   </div>
 
   <div class="trash-icon">
-    <img src="./public/images/trash.ico" alt="Recycle Bin">
+    <img src="public/images/trash.ico" alt="Recycle Bin">
     <div class="icon-label">Recycle Bin</div>
   </div>
-  
+
   <div class="taskbar">
     <button class="start-button">Start</button>
     <div class="clock" id="clock"></div>
   </div>
-
-  <div id="about-window" class="window">
-    <div class="title-bar">
-      <span>About.sys - Profile</span>
-      <div class="window-controls">
-        <div class="window-button close-button" onclick="hideWindow('about')">×</div>
-      </div>
-    </div>
-    <div class="window-content about-content">
-      <img src="public/images/profile.jpg" alt="Profile Photo" class="about-image">
-      
-      <div class="about-text">
-        <h2>About Me</h2>
-        <p>Hello! I'm Abby, a cybersecurity enthusiast and current Purdue student with a passion for all things tech. Here's a bit about me:</p>
-        <ul class="interests-list">
-          <li>Cat lover and proud pet parent</li>
-          <li>Serial hobby collector - currently exploring the art of crochet</li>
-          <li>Pursuing Cybersecurity at Purdue University</li>
-          <li>Deeply passionate about technology, especially cybersecurity</li>
-        </ul>
-        <p>I believe in the perfect blend of technical expertise and creative problem-solving. Whether I'm working on securing networks or learning a new crochet pattern, I bring the same level of dedication and enthusiasm to everything I do.</p>
-      </div>
 
   <script>
     let isDragging = false;
@@ -373,7 +345,6 @@
       const window = document.getElementById(id + '-window');
       window.classList.add('active');
       
-      // Reset position on open
       window.style.transform = 'translate(-50%, -50%)';
       xOffset = 0;
       yOffset = 0;
