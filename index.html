@@ -63,13 +63,17 @@
       background: #ECE9D8;
       border: 3px solid #0055EA;
       box-shadow: 4px 4px 10px rgba(0,0,0,0.5);
-      width: 800px;
-      height: 600px;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
     }
 
+    #resume-window {
+      width: 800px;
+      height: 600px;
+    } 
+
+    
     .window.active {
       display: block;
     }
@@ -143,6 +147,70 @@
       text-align: center;
       font-size: 13px;
       text-shadow: 1px 1px 2px black;
+    }
+
+    #about-window {
+      width: auto;
+      height: auto;
+      min-width: 600px;
+      max-width: 800px;
+    }
+    
+    .about-content {
+      display: flex;
+      padding: 20px;
+      gap: 30px;
+      background: #ECE9D8;
+    }
+    
+    .about-image {
+      width: 200px;
+      height: 200px;
+      border: 3px solid #0055EA;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+      flex-shrink: 0; /* Prevents image from shrinking */
+    }
+    
+    .about-text {
+      flex: 1;
+      font-family: 'Tahoma', sans-serif;
+      min-width: 300px; /* Ensures text has enough space */
+    }
+    
+    .about-text h2 {
+      color: #003399;
+      margin-top: 0;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #003399;
+      font-size: 24px;
+    }
+    
+    .about-text p {
+      line-height: 1.6;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+    
+    .interests-list {
+      list-style-type: none;
+      padding: 0;
+      margin: 15px 0;
+    }
+    
+    .interests-list li {
+      padding: 8px 0;
+      padding-left: 25px;
+      position: relative;
+      font-size: 14px;
+    }
+    
+    .interests-list li::before {
+      content: "•";
+      color: #003399;
+      font-size: 20px;
+      position: absolute;
+      left: 5px;
+      top: 6px;
     }
 
     .taskbar {
@@ -246,82 +314,28 @@
   </div>
 
     <div id="about-window" class="window">
-    <div class="title-bar">
-      <span>About.sys - Profile</span>
-      <div class="window-controls">
-        <div class="window-button close-button" onclick="hideWindow('about')">×</div>
+      <div class="title-bar">
+        <span>About.sys - Profile</span>
+        <div class="window-controls">
+          <div class="window-button close-button" onclick="hideWindow('about')">×</div>
+        </div>
       </div>
-    </div>
-    <div class="window-content about-content">
-      <style>
-        .about-content {
-          display: flex;
-          padding: 20px;
-          gap: 30px;
-          background: #ECE9D8;
-        }
-  
-        .about-image {
-          width: 200px;
-          height: 200px;
-          border: 3px solid #0055EA;
-          box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
-        }
-  
-        .about-text {
-          flex: 1;
-          font-family: 'Tahoma', sans-serif;
-        }
-  
-        .about-text h2 {
-          color: #003399;
-          margin-top: 0;
-          padding-bottom: 10px;
-          border-bottom: 2px solid #003399;
-          font-size: 24px;
-        }
-  
-        .about-text p {
-          line-height: 1.6;
-          margin-bottom: 15px;
-          font-size: 14px;
-        }
-  
-        .interests-list {
-          list-style-type: none;
-          padding: 0;
-        }
-  
-        .interests-list li {
-          padding: 8px 0;
-          padding-left: 25px;
-          position: relative;
-        }
-  
-        .interests-list li::before {
-          content: "•";
-          color: #003399;
-          font-size: 20px;
-          position: absolute;
-          left: 5px;
-        }
-      </style>
-  
-      <img src="/api/placeholder/200/200" alt="Profile Photo" class="about-image">
-      
-      <div class="about-text">
-        <h2>About Me</h2>
-        <div class="interests-list">
+      <div class="window-content about-content">
+        <img src="/api/placeholder/200/200" alt="Profile Photo" class="about-image">
+        
+        <div class="about-text">
+          <h2>About Me</h2>
           <p>Hello! I'm Abby, a cybersecurity enthusiast and current Purdue student with a passion for all things tech. Here's a bit about me:</p>
-          <li>Cat lover and proud pet parent</li>
-          <li>Serial hobby collector - currently exploring the art of crochet</li>
-          <li>Pursuing Cybersecurity at Purdue University</li>
-          <li>Deeply passionate about technology, especially cybersecurity</li>
+          <ul class="interests-list">
+            <li>Cat lover and proud pet parent</li>
+            <li>Serial hobby collector - currently exploring the art of crochet</li>
+            <li>Pursuing Cybersecurity at Purdue University</li>
+            <li>Deeply passionate about technology, especially cybersecurity</li>
+          </ul>
           <p>I believe in the perfect blend of technical expertise and creative problem-solving. Whether I'm working on securing networks or learning a new crochet pattern, I bring the same level of dedication and enthusiasm to everything I do.</p>
         </div>
       </div>
     </div>
-  </div>
 
   <script>
     let isDragging = false;
