@@ -150,30 +150,47 @@
       bottom: 0;
       left: 0;
       right: 0;
-      height: 40px;
+      height: 30px;
       background: linear-gradient(to bottom, #245EDB, #1842A1);
       display: flex;
       align-items: center;
-      padding: 0 2px;
       z-index: 1000;
     }
     
     .start-button {
-      height: 38px;
-      width: 100px;
-      background: url('public/images/start.jpg') no-repeat center/contain;
-      border: none;
+      width: 98px;
+      height: 28px;
       margin: 1px;
+      padding: 1px 2px;
+      background: linear-gradient(to bottom, #3ba13b, #1e7b1e);
+      border: 1px solid #267426;
+      border-radius: 3px;
+      color: white;
+      font-weight: bold;
+      font-family: 'Tahoma', sans-serif;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
       cursor: pointer;
-      padding: 0;
+    }
+    
+    .start-button img {
+      width: 16px;
+      height: 16px;
+      margin-left: 5px;
     }
     
     .start-button:hover {
-      filter: brightness(1.1);
+      background: linear-gradient(to bottom, #4cb34c, #2f8c2f);
     }
     
     .start-button:active {
-      filter: brightness(0.9);
+      background: linear-gradient(to bottom, #1e7b1e, #3ba13b);
+    }
+    
+    .start-button-text {
+      margin-left: 3px;
     }
     .clock {
       color: white;
@@ -223,7 +240,10 @@
   </div>
 
   <div class="taskbar">
-    <button class="start-button"></button>
+    <button class="start-button">
+      <img src="public/images/start.jpg" alt="Windows Logo">
+      <span class="start-button-text">Start</span>
+    </button>
     <div class="clock" id="clock"></div>
   </div>
 
