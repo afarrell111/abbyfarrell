@@ -663,6 +663,20 @@
       </div>
     </div>
 
+      <div class="error-popup" id="constructionPopup" style="display: none;">
+      <div class="error-title-bar">
+        <span>System Message</span>
+        <div class="window-button close-button" onclick="closeConstructionPopup()">×</div>
+      </div>
+      <div class="error-content">
+        <div class="error-icon">🚧</div>
+        <div class="error-message">Some features are currently under construction. The terminal and recycle bin are not yet functional.</div>
+      </div>
+      <div class="error-buttons">
+        <button class="error-ok-button" onclick="closeConstructionPopup()">OK</button>
+      </div>
+    </div>
+
     <div id="about-window" class="window">
       <div class="title-bar">
         <span>About.me - Profile</span>
@@ -869,6 +883,28 @@
       document.addEventListener('mousemove', moveHandler);
       document.addEventListener('mouseup', upHandler);
     });
+    <script>
+          let constructionShown = false;
+    
+    document.addEventListener('click', function(e) {
+      if (e.target.closest('#terminal-window') || e.target.closest('.trash-icon')) {
+        if (!constructionShown) {
+          document.getElementById('constructionPopup').style.display = 'block';
+          new Audio('public/audio/error.wav').play();
+          constructionShown = true;
+        }
+      }
+    });
+    
+    function closeConstructionPopup() {
+      const popup = document.getElementById('constructionPopup');
+      popup.style.animation = 'fadeIn 0.3s ease-in-out reverse';
+      setTimeout(() => {
+        popup.style.display = 'none';
+        popup.style.animation = '';
+      }, 300);
+    }
+    </script>
 </script>
 </body>
 </html>
