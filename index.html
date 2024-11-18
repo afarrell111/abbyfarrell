@@ -919,23 +919,33 @@
       document.addEventListener('mouseup', upHandler);
     });
     
+    let constructionShown = false;
+    
     document.addEventListener('click', function(e) {
-      if (e.target.closest('.icon[onclick="showWindow(\'terminal\')"]') || e.target.closest('.trash-icon')) {
-        if (!constructionShown) {
-          document.getElementById('constructionPopup').style.display = 'block';
-          new Audio('public/audio/error.wav').play();
-          constructionShown = true;
+        // Check if clicked element is the terminal icon or its children
+        const terminalIcon = e.target.closest('.icon[onclick="showWindow(\'terminal\')"]');
+        // Check if clicked element is the trash icon or its children
+        const trashIcon = e.target.closest('.trash-icon');
+        
+        if (terminalIcon || trashIcon) {
+            if (!constructionShown) {
+                const popup = document.getElementById('constructionPopup');
+                popup.style.display = 'block';
+                new Audio('public/audio/error.wav').play().catch(e => console.log('Error playing sound:', e));
+                constructionShown = true;
+            }
         }
-      }
     });
     
     function closeConstructionPopup() {
-      const popup = document.getElementById('constructionPopup');
-      popup.style.animation = 'fadeIn 0.3s ease-in-out reverse';
-      setTimeout(() => {
-        popup.style.display = 'none';
-        popup.style.animation = '';
-      }, 300);
+        const popup = document.getElementById('constructionPopup');
+        popup.style.animation = 'fadeIn 0.3s ease-in-out reverse';
+        setTimeout(() => {
+            popup.style.display = 'none';
+            popup.style.animation = '';
+            // Reset the flag when popup is closed to allow it to show again
+            constructionShown = false;
+        }, 300);
     }
 </script>
 </body>
