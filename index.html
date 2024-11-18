@@ -580,7 +580,7 @@
     <div class="sidebar">
       <div class="icon" onclick="showWindow('resume')">
         <img src="public/images/File.PNG" alt="Resume">
-        <div class="icon-label">RESUME.PDF</div>
+        <div class="icon-label">MY EXPERIENCE</div>
       </div>
       <div class="icon" onclick="showWindow('about')">
         <img src="public/images/about.png" alt="About">
@@ -601,20 +601,17 @@
 
     <div id="resume-window" class="window">
       <div class="title-bar">
-        <span>Resume.pdf - Abby Farrell</span>
+        <span>LinkedIn</span>
         <div class="window-controls">
           <div class="window-button close-button" onclick="hideWindow('resume')">×</div>
         </div>
       </div>
       <div class="window-content">
-        <iframe 
-          class="pdf-viewer"
-          src="public/images/Abby-L-Farrell-Resume.pdf"
-          type="application/pdf"
-        ></iframe>
+        <a href="https://www.linkedin.com/in/abby-leigh-farrell/" target="_blank" rel="noopener noreferrer">
+          View My LinkedIn Profile
+        </a>
       </div>
     </div>
-  </div>
 
   <div class="error-popup" id="errorPopup">
       <div class="error-title-bar">
@@ -623,7 +620,7 @@
       </div>
       <div class="error-content">
         <div class="error-icon">⚠️</div>
-        <div class="error-message">I can make your system more secure than this website! Click RESUME.PDF to learn more!</div>
+        <div class="error-message">I can make your system more secure than this website! Click MY EXPERIENCE to learn more!</div>
       </div>
       <div class="error-buttons">
         <button class="error-ok-button" onclick="closeErrorPopup()">OK</button>
