@@ -751,11 +751,6 @@
     </div>
   </div>
 
-  <div class="trash-icon">
-    <img src="public/images/trash.ico" alt="Recycle Bin">
-    <div class="icon-label">Recycle Bin</div>
-  </div>
-
   <div class="taskbar">
     <img src="public/images/START.png" alt="Start" class="start-button">
     <div class="clock" id="clock"></div>
@@ -874,11 +869,12 @@
         lastTap = currentTime;
       });
     });
-    window.addEventListener('load', function() {
-      setTimeout(function() {
-        document.getElementById('errorPopup').style.display = 'block';
-        new Audio('public/audio/error.wav').play();
-      }, 500);
+    window.addEventListener('load', function() { 
+        const errorSound = new Audio('public/audio/error.wav'); 
+        setTimeout(function() { 
+            document.getElementById('errorPopup').style.display = 'block'; 
+            errorSound.play().catch(e => console.log('Error playing sound:', e)); 
+        }, 500); 
     });
     
     function closeErrorPopup() {
@@ -934,10 +930,8 @@
       document.addEventListener('mouseup', upHandler);
     });
     
-    let constructionShown = false;
-    
     document.addEventListener('click', function(e) {
-      if (e.target.closest('#terminal-window') || e.target.closest('.trash-icon')) {
+      if (e.target.closest('.icon[onclick="showWindow(\'terminal\')"]') || e.target.closest('.trash-icon')) {
         if (!constructionShown) {
           document.getElementById('constructionPopup').style.display = 'block';
           new Audio('public/audio/error.wav').play();
