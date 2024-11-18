@@ -933,8 +933,8 @@
       document.addEventListener('mousemove', moveHandler);
       document.addEventListener('mouseup', upHandler);
     });
-    <script>
-          let constructionShown = false;
+    
+    let constructionShown = false;
     
     document.addEventListener('click', function(e) {
       if (e.target.closest('#terminal-window') || e.target.closest('.trash-icon')) {
@@ -954,7 +954,6 @@
         popup.style.animation = '';
       }, 300);
     }
-    </script>
 </script>
 </body>
 </html>
