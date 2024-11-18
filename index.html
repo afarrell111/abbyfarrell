@@ -120,12 +120,6 @@
       overflow: hidden;
     }
 
-    .pdf-viewer {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
     .about-content {
       display: flex;
       padding: 20px;
@@ -574,36 +568,43 @@
         -webkit-overflow-scrolling: touch;
       }
     }
-    .profile-link {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      text-decoration: none;
-      color: #0066cc;
-      padding: 8px;
-      border-radius: 3px;
-      transition: background-color 0.2s;
-    }
-    
-    .profile-link:hover {
-      background-color: #f0f7ff;
-      text-decoration: underline;
-    }
-    
-    .link-icon {
-      width: 16px;
-      height: 16px;
-    }
-    
-    .external-icon {
-      width: 12px;
-      height: 12px;
-      opacity: 0.7;
-    }
-    
-    .window-content {
-      padding: 16px;
-    }
+    .linkedin-window {
+  width: 400px;
+  border: 1px solid #0055E5;
+}
+
+.linkedin-title-bar {
+  background: linear-gradient(to right, #0A246A, #3A6EA5);
+  color: white;
+  padding: 5px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.linkedin-close-button {
+  background: #ff4545;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.linkedin-content {
+  background: white;
+  padding: 15px;
+}
+
+.linkedin-profile-link {
+  color: #0066cc;
+  text-decoration: none;
+  font-family: Tahoma, sans-serif;
+  font-size: 12px;
+}
+
+.linkedin-profile-link:hover {
+  text-decoration: underline;
+}
   </style>
 </head>
 <body>
@@ -629,26 +630,22 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <div id="resume-window" class="window">
-      <div class="title-bar">
-        <span class="title-text">LinkedIn</span>
-        <div class="window-controls">
-          <div class="window-button close-button" onclick="hideWindow('resume')">×</div>
-        </div>
-      </div>
-      <div class="window-content">
-        <a 
-          href="https://www.linkedin.com/in/abby-leigh-farrell/" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          class="profile-link"
-        >
-          <img src="/path-to-linkedin-icon.png" alt="LinkedIn" class="link-icon" />
-          <span>View My LinkedIn Profile</span>
-          <img src="/path-to-external-link-icon.png" alt="External Link" class="external-icon" />
-        </a>
-      </div>
+  <div id="resume-window" class="linkedin-window">
+    <div class="linkedin-title-bar">
+      <span class="linkedin-title-text">LinkedIn</span>
+      <div class="linkedin-close-button" onclick="hideWindow('resume')">×</div>
     </div>
+    <div class="linkedin-content">
+      <a 
+        href="https://www.linkedin.com/in/abby-leigh-farrell/" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        class="linkedin-profile-link"
+      >
+        View My LinkedIn Profile
+      </a>
+    </div>
+  </div>
 
   <div class="error-popup" id="errorPopup">
       <div class="error-title-bar">
@@ -657,7 +654,6 @@
       </div>
       <div class="error-content">
         <div class="error-icon">⚠️</div>
-        <div class="error-message">UNDER CONSTRUCTION</div>
         <div class="error-message">I can make your system more secure than this website! Click LINKEDIN.LNK to learn more!</div>
       </div>
       <div class="error-buttons">
