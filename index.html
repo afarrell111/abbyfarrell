@@ -568,43 +568,81 @@
         -webkit-overflow-scrolling: touch;
       }
     }
-    .linkedin-window {
-  width: 400px;
-  border: 1px solid #0055E5;
-}
-
-.linkedin-title-bar {
-  background: linear-gradient(to right, #0A246A, #3A6EA5);
-  color: white;
-  padding: 5px 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.linkedin-close-button {
-  background: #ff4545;
-  color: white;
-  padding: 2px 6px;
-  border-radius: 2px;
-  cursor: pointer;
-}
-
-.linkedin-content {
-  background: white;
-  padding: 15px;
-}
-
-.linkedin-profile-link {
-  color: #0066cc;
-  text-decoration: none;
-  font-family: Tahoma, sans-serif;
-  font-size: 12px;
-}
-
-.linkedin-profile-link:hover {
-  text-decoration: underline;
-}
+    .linkedin-styled {
+      background: #f3f2ef;
+      padding: 0;
+    }
+    
+    .linkedin-header {
+      background: white;
+      padding: 15px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .linkedin-logo {
+      height: 30px;
+      width: auto;
+    }
+    
+    .linkedin-body {
+      padding: 20px;
+    }
+    
+    .linkedin-profile-link {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    
+    .linkedin-preview {
+      background: white;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      transition: box-shadow 0.2s;
+    }
+    
+    .linkedin-preview:hover {
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .linkedin-profile-image {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    
+    .linkedin-preview-text {
+      flex: 1;
+    }
+    
+    .linkedin-preview-text h3 {
+      margin: 0 0 5px 0;
+      color: #000;
+      font-size: 16px;
+    }
+    
+    .linkedin-preview-text p {
+      margin: 0 0 10px 0;
+      color: #666;
+      font-size: 14px;
+    }
+    
+    .view-profile {
+      color: #0a66c2;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    
+    #resume-window {
+      width: 500px;
+      height: auto;
+      min-height: 200px;
+    }
   </style>
 </head>
 <body>
@@ -629,25 +667,37 @@
     </div>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-    <div id="resume-window" class="window linkedin-window">
-    <div class="title-bar">
-      <span>LinkedIn</span>
-      <div class="window-controls">
-        <div class="window-button close-button" onclick="hideWindow('resume')">×</div>
+    
+    <div id="resume-window" class="window">
+      <div class="title-bar">
+        <span>LinkedIn</span>
+        <div class="window-controls">
+          <div class="window-button close-button" onclick="hideWindow('resume')">×</div>
+        </div>
+      </div>
+      <div class="window-content linkedin-styled">
+        <div class="linkedin-header">
+          <img src="public/images/linkedin-logo.png" alt="LinkedIn" class="linkedin-logo">
+        </div>
+        <div class="linkedin-body">
+          <a 
+            href="https://www.linkedin.com/in/abby-leigh-farrell/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="linkedin-profile-link"
+          >
+            <div class="linkedin-preview">
+              <img src="public/images/profile.jpg" alt="Profile Photo" class="linkedin-profile-image">
+              <div class="linkedin-preview-text">
+                <h3>Abby Farrell</h3>
+                <p>Cybersecurity Student at Purdue University</p>
+                <span class="view-profile">View My LinkedIn Profile →</span>
+              </div>
+            </div>
+          </a>
+        </div>
       </div>
     </div>
-    <div class="window-content">
-      <a 
-        href="https://www.linkedin.com/in/abby-leigh-farrell/" 
-        target="_blank" 
-        rel="noopener noreferrer"
-        class="linkedin-profile-link"
-      >
-        View My LinkedIn Profile
-      </a>
-    </div>
-  </div>
 
   <div class="error-popup" id="errorPopup">
       <div class="error-title-bar">
