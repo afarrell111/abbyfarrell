@@ -4,6 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Abby Farrell</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm@5.3.0/css/xterm.css">
+  <script src="https://cdn.jsdelivr.net/npm/xterm@5.3.0/lib/xterm.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.8.0/lib/xterm-addon-fit.js"></script>
   <style>
     body {
       margin: 0;
@@ -633,21 +636,85 @@
       height: auto;
       min-height: 200px;
     }
+
+    #terminal-window {
+      width: 600px;
+      height: 420px;
+    }
+
+    #faq-window {
+      width: auto;
+      height: auto;
+      min-width: 500px;
+      max-width: 650px;
+    }
+
+    .faq-content {
+      padding: 20px;
+      background: #ECE9D8;
+      font-family: 'Tahoma', sans-serif;
+    }
+
+    .faq-content h2 {
+      color: #003399;
+      margin-top: 0;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #003399;
+      font-size: 22px;
+    }
+
+    .faq-item {
+      margin-bottom: 18px;
+    }
+
+    .faq-item p {
+      margin: 4px 0 0 0;
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    .faq-question {
+      font-weight: bold;
+      color: #0A246A;
+      font-size: 15px;
+    }
+
+    .terminal-container {
+      background: #0c0c0c;
+      height: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+
+    #xterm-terminal {
+      height: 100%;
+    }
+
+    @media (max-width: 768px) {
+      #terminal-window {
+        width: 95% !important;
+        height: 80vh !important;
+      }
+    }
   </style>
 </head>
 <body>
     <div class="sidebar">
       <div class="icon" onclick="showWindow('resume')">
         <img src="public/images/File.PNG" alt="Resume">
-        <div class="icon-label">LINKEDIN.LNK</div>
+        <div class="icon-label">LinkedIn</div>
       </div>
       <div class="icon" onclick="showWindow('about')">
         <img src="public/images/about.png" alt="About">
-        <div class="icon-label">ABOUT.ME</div>
+        <div class="icon-label">About_Me</div>
       </div>
       <div class="icon" onclick="showWindow('terminal')">
         <img src="public/images/cmd.JPG" alt="Terminal">
-        <div class="icon-label">SHELL.CMD</div>
+        <div class="icon-label">Shell</div>
+      </div>
+      <div class="icon" onclick="showWindow('faq')">
+        <img src="public/images/File.PNG" alt="FAQ">
+        <div class="icon-label">FAQ</div>
       </div>
     </div>
     
@@ -700,7 +767,6 @@
       </div>
     </div>
 
-  
     <div class="error-popup" id="constructionPopup" style="display: none;">
       <div class="error-title-bar">
         <span>System Message</span>
@@ -708,7 +774,7 @@
       </div>
       <div class="error-content">
         <div class="error-icon">🚧</div>
-        <div class="error-message">Some features are currently under construction. The terminal and recycle bin are not yet functional.</div>
+        <div class="error-message">Some features are currently under construction. The recycle bin is not yet functional.</div>
       </div>
       <div class="error-buttons">
         <button class="error-ok-button" onclick="closeConstructionPopup()">OK</button>
@@ -717,7 +783,7 @@
 
     <div id="about-window" class="window">
       <div class="title-bar">
-        <span>About.me - Profile</span>
+        <span>About_Me</span>
         <div class="window-controls">
           <div class="window-button close-button" onclick="hideWindow('about')">×</div>
         </div>
@@ -725,17 +791,59 @@
       <div class="window-content about-content">        
         <div class="about-text">
           <h2>About Me</h2>
-          <p>Hello! I'm Abby, a cybersecurity enthusiast and current Carnegie Mellon master's student with a passion for all things tech. Here's a bit about me:</p>
+          <p>Hello! I'm Abby, a cybersecurity enthusiast and current Carnegie Mellon master's student deepening my systems security knowledge. Here's a bit about me:</p>
           <ul class="interests-list">
-            <li>Serial hobby collector - currently planning a camping trip to Yellowstone and Zion</li>
-            <li>Graduated from Purdue University cybersecurity in December 2024</li>
+            <li>Graduated from Purdue University Network Security in December 2024</li>
             <li>Deeply passionate about cybersecurity whether it be blue or red team</li>
+            <li>Regular at Noodlehead - if I'm not studying, that's where to find me</li>
           </ul>
-          <p>I believe in a blend of technical expertise and creative problem-solving. Whether I'm working on securing networks or finding bison in Yellowstone, I bring the same level of dedication and enthusiasm to everything I do.</p>
+          <p>I believe in a blend of technical expertise and creative problem-solving. Whether I'm working on securing networks or trying a new dish at Noodlehead, I bring the same level of dedication and enthusiasm to everything I do.</p>
         </div>
       </div>
     </div>
   </div>
+
+    <div id="terminal-window" class="window">
+      <div class="title-bar">
+        <span>Shell</span>
+        <div class="window-controls">
+          <div class="window-button close-button" onclick="hideWindow('terminal')">×</div>
+        </div>
+      </div>
+      <div class="window-content">
+        <div class="terminal-container">
+          <div id="xterm-terminal"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="faq-window" class="window">
+      <div class="title-bar">
+        <span>FAQ</span>
+        <div class="window-controls">
+          <div class="window-button close-button" onclick="hideWindow('faq')">×</div>
+        </div>
+      </div>
+      <div class="window-content faq-content">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+          <p class="faq-question">Is Abby looking for a job right now?</p>
+          <p>Yes, I graduate from Carnegie Mellon's master's program in December 2026.</p>
+        </div>
+        <div class="faq-item">
+          <p class="faq-question">Did Abby make this website herself?</p>
+          <p>No, a lot of Claude and open source projects: Windows XP for the desktop inspiration, and <a href="https://github.com/xtermjs/xterm.js" target="_blank" rel="noopener noreferrer">xterm.js</a> for the SHELL.CMD terminal. I just wanted to make a cool website.</p>
+        </div>
+        <div class="faq-item">
+          <p class="faq-question">Why is Abby's LinkedIn void of job responsibilities?</p>
+          <p>Attackers are currently using LinkedIn as a way to gain OSINT on company's security products, so I am trying to avoid being part of that :) If you want to learn more about what I did, please reach out!</p>
+        </div>
+        <div class="faq-item">
+          <p class="faq-question">What is Abby's timezone?</p>
+          <p>Check the bottom right of the screen - the clock in the taskbar is set to my timezone.</p>
+        </div>
+      </div>
+    </div>
 
   <div class="taskbar">
     <img src="public/images/START.png" alt="Start" class="start-button">
@@ -755,10 +863,14 @@
       document.querySelectorAll('.window').forEach(w => w.classList.remove('active'));
       const window = document.getElementById(id + '-window');
       window.classList.add('active');
-      
+
       window.style.transform = 'translate(-50%, -50%)';
       xOffset = 0;
       yOffset = 0;
+
+      if (id === 'terminal') {
+        initTerminal();
+      }
     }
 
     function hideWindow(id) {
@@ -801,7 +913,8 @@
       const time = now.toLocaleTimeString('en-US', {
         hour: '2-digit',
         minute: '2-digit',
-        hour12: true
+        hour12: true,
+        timeZone: 'America/New_York'
       });
       document.getElementById('clock').textContent = time;
     }
@@ -917,14 +1030,12 @@
     });
     
     let constructionShown = false;
-    
+
     document.addEventListener('click', function(e) {
-        // Check if clicked element is the terminal icon or its children
-        const terminalIcon = e.target.closest('.icon[onclick="showWindow(\'terminal\')"]');
         // Check if clicked element is the trash icon or its children
         const trashIcon = e.target.closest('.trash-icon');
-        
-        if (terminalIcon || trashIcon) {
+
+        if (trashIcon) {
             if (!constructionShown) {
                 const popup = document.getElementById('constructionPopup');
                 popup.style.display = 'block';
@@ -933,7 +1044,7 @@
             }
         }
     });
-    
+
     function closeConstructionPopup() {
         const popup = document.getElementById('constructionPopup');
         popup.style.animation = 'fadeIn 0.3s ease-in-out reverse';
@@ -943,6 +1054,328 @@
             // Reset the flag when popup is closed to allow it to show again
             constructionShown = false;
         }, 300);
+    }
+
+    // ---- Fake shell (client-side only, nothing here executes real commands) ----
+
+    const termFS = {
+      type: 'dir',
+      children: {
+        home: {
+          type: 'dir',
+          children: {
+            abby: {
+              type: 'dir',
+              children: {
+                'README.txt': {
+                  type: 'file',
+                  content: "Welcome to abby's box.\nType 'help' to see available commands.\nSomething tells me not everything in here shows up with a plain 'ls'..."
+                },
+                'projects': {
+                  type: 'dir',
+                  children: {
+                    'notes.txt': {
+                      type: 'file',
+                      content: "TODO: finish the CTF challenge on the site.\nTODO: stop hiding flags in obvious places."
+                    }
+                  }
+                },
+                '.secrets': {
+                  type: 'dir',
+                  hidden: true,
+                  children: {
+                    'notes.txt': {
+                      type: 'file',
+                      content: "You found the hidden directory. Nicely done.\nThere's one more file in here worth reading."
+                    },
+                    'flag.txt': {
+                      type: 'file',
+                      content: 'CTF{h1dd3n_1n_pl41n_s1ght}'
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        etc: {
+          type: 'dir',
+          children: {
+            'motd.txt': {
+              type: 'file',
+              content: 'Unauthorized access is a federal offense.\n(just kidding, this whole shell is fake - have fun)'
+            }
+          }
+        }
+      }
+    };
+
+    let termPath = ['home', 'abby'];
+    let termInitialized = false;
+
+    function termResolve(pathArr) {
+      let node = termFS;
+      for (const part of pathArr) {
+        if (!node || node.type !== 'dir' || !node.children[part]) return null;
+        node = node.children[part];
+      }
+      return node;
+    }
+
+    function termNormalize(base, target) {
+      let parts = target.startsWith('/') ? [] : base.slice();
+      for (const seg of target.split('/')) {
+        if (seg === '' || seg === '.') continue;
+        if (seg === '..') { parts.pop(); continue; }
+        parts.push(seg);
+      }
+      return parts;
+    }
+
+    function termPrompt() {
+      const display = '/' + termPath.join('/');
+      const shown = display === '/home/abby' ? '~' : display;
+      return `abby@abbyfarrell:${shown}$`;
+    }
+
+    const TERM_COMMANDS = ['help', 'ls', 'cd', 'cat', 'pwd', 'whoami', 'clear', 'echo'];
+
+    function termLCP(strs) {
+      if (strs.length === 0) return '';
+      let prefix = strs[0];
+      for (let i = 1; i < strs.length; i++) {
+        while (!strs[i].startsWith(prefix)) {
+          prefix = prefix.slice(0, -1);
+          if (!prefix) return '';
+        }
+      }
+      return prefix;
+    }
+
+    // xterm.js: https://github.com/xtermjs/xterm.js (MIT) renders the terminal;
+    // everything below just feeds it text and reads keystrokes - there's no real shell underneath.
+    let xterm = null;
+    let xtermFit = null;
+    let termInputBuffer = '';
+
+    const TERM_RED = '\x1b[91m';
+    const TERM_BLUE = '\x1b[94m';
+    const TERM_RESET = '\x1b[0m';
+
+    function termPrint(text, color) {
+      xterm.writeln(color ? color + text + TERM_RESET : text);
+    }
+
+    function termWritePrompt() {
+      xterm.write('\r\n' + termPrompt() + ' ');
+    }
+
+    function termHandleTab() {
+      const buffer = termInputBuffer;
+      const lastSpace = buffer.lastIndexOf(' ');
+      const isFirstToken = lastSpace === -1;
+      const currentToken = isFirstToken ? buffer : buffer.slice(lastSpace + 1);
+
+      let matches;
+      let partial = currentToken;
+      let dirPart = '';
+      let isPathLookup = false;
+
+      if (isFirstToken) {
+        matches = TERM_COMMANDS.filter(c => c.startsWith(currentToken)).sort();
+      } else {
+        isPathLookup = true;
+        const slashIdx = currentToken.lastIndexOf('/');
+        dirPart = slashIdx === -1 ? '' : currentToken.slice(0, slashIdx + 1);
+        partial = slashIdx === -1 ? currentToken : currentToken.slice(slashIdx + 1);
+        const dirNode = termResolve(termNormalize(termPath, dirPart === '' ? '.' : dirPart));
+        if (!dirNode || dirNode.type !== 'dir') return;
+        matches = Object.keys(dirNode.children)
+          .filter(name => name.startsWith(partial) && (partial.startsWith('.') || !name.startsWith('.')))
+          .sort()
+          .map(name => ({ name: name, isDir: dirNode.children[name].type === 'dir' }));
+      }
+
+      if (matches.length === 0) return;
+
+      const names = isPathLookup ? matches.map(m => m.name) : matches;
+
+      if (matches.length === 1) {
+        const suffix = names[0].slice(partial.length);
+        termInputBuffer += suffix;
+        xterm.write(suffix);
+        const trailing = isPathLookup ? (matches[0].isDir ? '/' : ' ') : ' ';
+        termInputBuffer += trailing;
+        xterm.write(trailing);
+        return;
+      }
+
+      const lcp = termLCP(names);
+      if (lcp.length > partial.length) {
+        const suffix = lcp.slice(partial.length);
+        termInputBuffer += suffix;
+        xterm.write(suffix);
+        return;
+      }
+
+      const display = isPathLookup ? matches.map(m => m.name + (m.isDir ? '/' : '')) : matches;
+      xterm.write('\r\n');
+      termPrint(display.join('  '));
+      termWritePrompt();
+      xterm.write(termInputBuffer);
+    }
+
+    function initTerminal() {
+      if (termInitialized) return;
+      termInitialized = true;
+
+      xterm = new Terminal({
+        convertEol: true,
+        cursorBlink: true,
+        fontFamily: "'Consolas', 'Courier New', monospace",
+        fontSize: 13,
+        theme: {
+          background: '#0c0c0c',
+          foreground: '#33ff33',
+          cursor: '#33ff33',
+          red: '#ff5c5c',
+          brightRed: '#ff5c5c',
+          blue: '#6ab7ff',
+          brightBlue: '#6ab7ff'
+        }
+      });
+      xtermFit = new FitAddon.FitAddon();
+      xterm.loadAddon(xtermFit);
+      xterm.open(document.getElementById('xterm-terminal'));
+      xtermFit.fit();
+
+      xterm.writeln('Fake Shell v1.0 - Powered by xterm.js.');
+      xterm.writeln("Type 'help' to get started.");
+      termWritePrompt();
+
+      xterm.onData(function(data) {
+        if (data === '\r') {
+          const cmdLine = termInputBuffer;
+          termInputBuffer = '';
+          xterm.write('\r\n');
+          termRun(cmdLine.trim());
+          termWritePrompt();
+        } else if (data === '\u007F') {
+          if (termInputBuffer.length > 0) {
+            termInputBuffer = termInputBuffer.slice(0, -1);
+            xterm.write('\b \b');
+          }
+        } else if (data === '\u0003') {
+          termInputBuffer = '';
+          xterm.write('^C');
+          termWritePrompt();
+        } else if (data === '\t') {
+          termHandleTab();
+        } else if (data >= String.fromCharCode(0x20) && data !== '\u007F') {
+          termInputBuffer += data;
+          xterm.write(data);
+        }
+      });
+    }
+
+    function termRun(cmdLine) {
+      if (!cmdLine) return;
+      const [cmd, ...args] = cmdLine.split(/\s+/);
+
+      switch (cmd) {
+        case 'help':
+          termPrint('Available commands:');
+          termPrint('  help            show this list');
+          termPrint('  ls [-a] [-l]    list files (-a shows hidden, -l uses long format)');
+          termPrint('  cd <dir>        change directory');
+          termPrint('  cat <file>      print a file');
+          termPrint('  pwd             print current directory');
+          termPrint('  whoami          print current user');
+          termPrint('  clear           clear the screen');
+          termPrint('  echo <text>     print text');
+          break;
+
+        case 'ls': {
+          const node = termResolve(termPath);
+          const flags = args.filter(a => a.startsWith('-')).join('');
+          const showHidden = flags.includes('a');
+          const longFormat = flags.includes('l');
+          const names = Object.keys(node.children)
+            .filter(name => showHidden || !node.children[name].hidden)
+            .sort();
+          if (names.length === 0) {
+            termPrint('(empty)');
+          } else if (longFormat) {
+            names.forEach(name => {
+              const child = node.children[name];
+              const isDir = child.type === 'dir';
+              const perms = isDir ? 'drwxr-xr-x' : '-rw-r--r--';
+              const size = isDir ? 4096 : child.content.length;
+              const label = isDir ? name + '/' : name;
+              termPrint(`${perms}  1 abby  abby  ${String(size).padStart(5)} Sep  3 20:41 ${label}`);
+            });
+          } else {
+            termPrint(names.map(name => node.children[name].type === 'dir' ? name + '/' : name).join('  '));
+          }
+          break;
+        }
+
+        case 'cd': {
+          if (args.length === 0) {
+            termPath = ['home', 'abby'];
+            break;
+          }
+          const target = termNormalize(termPath, args[0]);
+          const node = termResolve(target);
+          if (!node) {
+            termPrint(`cd: no such directory: ${args[0]}`, TERM_RED);
+          } else if (node.type !== 'dir') {
+            termPrint(`cd: not a directory: ${args[0]}`, TERM_RED);
+          } else {
+            termPath = target;
+          }
+          break;
+        }
+
+        case 'cat': {
+          if (args.length === 0) {
+            termPrint('cat: missing file operand', TERM_RED);
+            break;
+          }
+          const target = termNormalize(termPath, args[0]);
+          const node = termResolve(target);
+          if (!node) {
+            termPrint(`cat: no such file: ${args[0]}`, TERM_RED);
+          } else if (node.type !== 'file') {
+            termPrint(`cat: is a directory: ${args[0]}`, TERM_RED);
+          } else {
+            termPrint(node.content);
+            if (node.content.includes('CTF{')) {
+              termPrint('Nice work - you found the flag!', TERM_BLUE);
+            }
+          }
+          break;
+        }
+
+        case 'pwd':
+          termPrint('/' + termPath.join('/'));
+          break;
+
+        case 'whoami':
+          termPrint('abby');
+          break;
+
+        case 'clear':
+          xterm.clear();
+          break;
+
+        case 'echo':
+          termPrint(args.join(' '));
+          break;
+
+        default:
+          termPrint(`command not found: ${cmd}`, TERM_RED);
+      }
     }
 </script>
 </body>
